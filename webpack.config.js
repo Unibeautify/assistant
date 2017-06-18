@@ -1,14 +1,16 @@
 const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
+const outputDir = "docs";
 module.exports = {
     entry: [
         "react-hot-loader/patch",
         "./src/index.tsx",
     ],
     output: {
-        path: path.join(__dirname, 'docs'),
+        path: path.join(__dirname, outputDir),
         filename: "bundle.js",
     },
 
@@ -28,6 +30,7 @@ module.exports = {
             chunksSortMode: 'dependency',
             template: path.resolve(__dirname, './src/index.ejs')
         }),
+        new CleanWebpackPlugin([outputDir])
     ],
 
     module: {
