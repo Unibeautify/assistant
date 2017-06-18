@@ -1,30 +1,23 @@
 import * as React from "react";
+import {
+  HashRouter as Router,
+  Route,
+} from 'react-router-dom';
+import { Welcome } from "./Welcome";
+import { Config, Debug, Setup } from "./pages";
 require('./styles/lux.css');
 
 export default class App extends React.Component<any, any> {
-    interval: number;
-    constructor() {
-        super();
-        this.state = { count: 0 };
-    }
-
-    //This state will be maintained during hot reloads
-    componentWillMount() {
-        this.interval = setInterval(() => {
-            this.setState({ count: this.state.count + 1 })
-        }, 1000)
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
-
     render() {
         return (
-            <div>
-                <h1>Hello world!</h1>
-                <div>Welcome to hot-reloading React written in TypeScript! {this.state.count}</div>
-            </div>
+            <Router>
+                <div>
+                    <Route exact path="/" component={Welcome} />
+                    <Route path="/config" component={Config} />
+                    <Route path="/debug" component={Debug} />
+                    <Route path="/setup" component={Setup} />
+                </div>
+            </Router>
         );
     }
 }
