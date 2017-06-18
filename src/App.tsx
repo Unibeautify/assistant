@@ -1,4 +1,5 @@
 import * as React from "react";
+require('./styles/lux.css');
 
 export default class App extends React.Component<any, any> {
     interval: number;

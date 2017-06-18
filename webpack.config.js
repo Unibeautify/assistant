@@ -7,6 +7,7 @@ const outputDir = "docs";
 module.exports = {
     entry: [
         "react-hot-loader/patch",
+        "bootstrap-loader",
         "./src/index.tsx",
     ],
     output: {
@@ -51,6 +52,10 @@ module.exports = {
                 test: /\.js$/,
                 loader: "source-map-loader"
             },
+            {
+                test: /\.css$/,
+                loaders: [ 'style-loader', 'css-loader' ]
+            }
         ]
     },
 
