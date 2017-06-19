@@ -1,6 +1,15 @@
 import * as React from "react";
+import { DebugReport } from "./DebugReport";
 
-export class DebugReportInput extends React.Component<any, any> {
+export class DebugReportInput extends React.Component<DebugReportInputProps, DebugReportInputState> {
+
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            value: ''
+        };
+    }
+
     render() {
         return (
             <div>
@@ -15,10 +24,34 @@ export class DebugReportInput extends React.Component<any, any> {
                 </details>
                 <form>
                     <div className="form-group">
-                        <textarea className="form-control" id="debugReport" rows={5} defaultValue={""} placeholder="Paste debug report here." />
+                        <textarea
+                            className="form-control" id="debugReport" rows={5}
+                            defaultValue={""} placeholder="Paste debug report here."
+                            onChange={this.handleChange.bind(this)} value={this.value}
+                        />
                     </div>
                 </form>
             </div>
         );
     }
+
+    private handleChange(event: any) {
+        const value: string = event.target.value;
+        this.setState({ value });
+        const report = new DebugReport(value);
+        this.props.debugReportChange(report);
+    }
+
+    private get value(): string {
+        return this.state.value;
+    }
+
+}
+
+export interface DebugReportInputProps {
+    debugReportChange(report: DebugReport): void;
+}
+
+export interface DebugReportInputState {
+    value: string;
 }
