@@ -17,6 +17,17 @@ export class DebugReport {
         return this.parse("[*][*]Platform[*][*]: (.+)\n", "unknown");
     }
 
+    get operatingSystem(): OperatingSystem {
+        switch (this.platform) {
+            case 'win32':
+                return OperatingSystem.Windows;
+            case 'darwin':
+                return OperatingSystem.Mac;
+            default:
+                return OperatingSystem.Linux;
+        }
+    }
+
     get atomVersion(): string {
         return this.parse("[*][*]Atom Version[*][*]: (.+)\n", "unknown");
     }
@@ -77,6 +88,25 @@ export class DebugReport {
         return this.parseJson("### Final Options\n\n.+\n```json\n((.|[\r\n])+?)```");
     }
 
+    get output(): string {
+        return this.parse("## Results\n\n.+\n```((.|[\r\n])+?)```", "");
+    }
+
+    get logs(): string {
+        return this.parse("### Logs\n\n```\n((.|[\r\n])+?)```", "");
+    }
+
+    get hasError(): boolean {
+        return this.error !== undefined;
+    }
+
+    get error(): BeautifyError | undefined {
+        if (this.output.indexOf("Could not find") !== -1 && this.logs.indexOf("Version is not valid") !== -1) {
+            return BeautifyError.InvalidVersion;
+        }
+        return undefined;
+    }
+
     private parseJson(pattern: string, defaultValue: any = {}): object {
         try {
             const s = this.parse(pattern, defaultValue);
@@ -118,7 +148,21 @@ export class DebugReport {
             projectOptions: this.projectOptions,
             preTransformedOptions: this.preTransformedOptions,
             finalOptions: this.finalOptions,
+            output: this.output,
+            logs: this.logs,
+            hasError: this.hasError,
+            error: this.error,
         };
     }
 
+}
+
+export enum OperatingSystem {
+    Mac,
+    Windows,
+    Linux
+}
+
+export enum BeautifyError {
+    InvalidVersion,
 }

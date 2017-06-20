@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f5453987401bdf4c19f5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0e925de0f12133b5849c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -37621,6 +37621,20 @@ var DebugReport = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DebugReport.prototype, "operatingSystem", {
+        get: function () {
+            switch (this.platform) {
+                case 'win32':
+                    return OperatingSystem.Windows;
+                case 'darwin':
+                    return OperatingSystem.Mac;
+                default:
+                    return OperatingSystem.Linux;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(DebugReport.prototype, "atomVersion", {
         get: function () {
             return this.parse("[*][*]Atom Version[*][*]: (.+)\n", "unknown");
@@ -37726,6 +37740,37 @@ var DebugReport = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(DebugReport.prototype, "output", {
+        get: function () {
+            return this.parse("## Results\n\n.+\n```((.|[\r\n])+?)```", "");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DebugReport.prototype, "logs", {
+        get: function () {
+            return this.parse("### Logs\n\n```\n((.|[\r\n])+?)```", "");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DebugReport.prototype, "hasError", {
+        get: function () {
+            return this.error !== undefined;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DebugReport.prototype, "error", {
+        get: function () {
+            if (this.output.indexOf("Could not find") !== -1 && this.logs.indexOf("Version is not valid") !== -1) {
+                return BeautifyError.InvalidVersion;
+            }
+            return undefined;
+        },
+        enumerable: true,
+        configurable: true
+    });
     DebugReport.prototype.parseJson = function (pattern, defaultValue) {
         if (defaultValue === void 0) { defaultValue = {}; }
         try {
@@ -37769,11 +37814,25 @@ var DebugReport = (function () {
             projectOptions: this.projectOptions,
             preTransformedOptions: this.preTransformedOptions,
             finalOptions: this.finalOptions,
+            output: this.output,
+            logs: this.logs,
+            hasError: this.hasError,
+            error: this.error,
         };
     };
     return DebugReport;
 }());
 exports.DebugReport = DebugReport;
+var OperatingSystem;
+(function (OperatingSystem) {
+    OperatingSystem[OperatingSystem["Mac"] = 0] = "Mac";
+    OperatingSystem[OperatingSystem["Windows"] = 1] = "Windows";
+    OperatingSystem[OperatingSystem["Linux"] = 2] = "Linux";
+})(OperatingSystem = exports.OperatingSystem || (exports.OperatingSystem = {}));
+var BeautifyError;
+(function (BeautifyError) {
+    BeautifyError[BeautifyError["InvalidVersion"] = 0] = "InvalidVersion";
+})(BeautifyError = exports.BeautifyError || (exports.BeautifyError = {}));
 
 
  ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/DebugReport.ts"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/DebugReport.ts"); } } })();
@@ -37853,6 +37912,68 @@ exports.DebugReportInput = DebugReportInput;
 
 /***/ }),
 
+/***/ "./src/pages/debug/DebugReportSummary.tsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__("./node_modules/react/react.js");
+var DebugReport_1 = __webpack_require__("./src/pages/debug/DebugReport.ts");
+var TimeAgo = __webpack_require__("./node_modules/react-timeago/lib/index.js").default;
+var DebugReportSummary = (function (_super) {
+    __extends(DebugReportSummary, _super);
+    function DebugReportSummary() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    DebugReportSummary.prototype.render = function () {
+        var report = this.props.report;
+        if (report.isValid) {
+            return (React.createElement("div", null,
+                React.createElement("p", null,
+                    "Thanks! I see this was generated ",
+                    React.createElement(TimeAgo, { date: report.date }),
+                    "."),
+                Object.keys(report.toJSON()).map(function (key) { return (React.createElement("div", { key: key },
+                    React.createElement("details", null,
+                        React.createElement("summary", null, key),
+                        React.createElement("pre", null, JSON.stringify(report.toJSON()[key], null, 2))))); }),
+                report.hasError ?
+                    this.renderError(report.error) :
+                    (React.createElement("div", null, "Looks good to me!"))));
+        }
+        else {
+            return (React.createElement("div", null, "This doesn't look right. Please try again."));
+        }
+    };
+    DebugReportSummary.prototype.renderError = function (error) {
+        switch (error) {
+            case DebugReport_1.BeautifyError.InvalidVersion:
+                return (React.createElement("div", null, "Invalid version!"));
+            default:
+                return (React.createElement("div", null, "Unknown error!!!"));
+        }
+    };
+    return DebugReportSummary;
+}(React.Component));
+exports.DebugReportSummary = DebugReportSummary;
+
+
+ ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/DebugReportSummary.tsx"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/DebugReportSummary.tsx"); } } })();
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/node-libs-browser/node_modules/process/browser.js")))
+
+/***/ }),
+
 /***/ "./src/pages/debug/index.tsx":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37872,6 +37993,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__("./node_modules/react/react.js");
 var DebugReportInput_1 = __webpack_require__("./src/pages/debug/DebugReportInput.tsx");
 var TimeAgo = __webpack_require__("./node_modules/react-timeago/lib/index.js").default;
+var DebugReportSummary_1 = __webpack_require__("./src/pages/debug/DebugReportSummary.tsx");
 var Debug = (function (_super) {
     __extends(Debug, _super);
     function Debug(props) {
@@ -37894,12 +38016,7 @@ var Debug = (function (_super) {
                 React.createElement("h2", null, "Your Information"),
                 React.createElement("p", null, "Please generate the debugging report within Atom-Beautify and paste it below."),
                 React.createElement(DebugReportInput_1.DebugReportInput, { debugReportChange: function (report) { return _this.setState({ report: report }); } })),
-            report && (report.isValid ? (React.createElement("div", null,
-                React.createElement("p", null,
-                    "Thanks! I see this was generated ",
-                    React.createElement(TimeAgo, { date: report.date }),
-                    "."),
-                React.createElement("pre", null, JSON.stringify(report, null, 2)))) : (React.createElement("div", null, "This doesn't look right. Please try again.")))));
+            report && React.createElement(DebugReportSummary_1.DebugReportSummary, { report: report })));
     };
     return Debug;
 }(React.Component));
