@@ -1,3 +1,4 @@
+import { BeautifyError, InvalidExecutableVersionError } from "./BeautifyError";
 
 export class DebugReport {
     constructor(private raw: string) {
@@ -101,8 +102,12 @@ export class DebugReport {
     }
 
     get error(): BeautifyError | undefined {
-        if (this.output.indexOf("Could not find") !== -1 && this.logs.indexOf("Version is not valid") !== -1) {
-            return BeautifyError.InvalidVersion;
+        let failedExecutable: string;
+        if (failedExecutable = DebugReport.parse(this.logs, "Error loading executables.+ Could not find '(.+)'.")) {
+            let versionText: string;
+            if (versionText = DebugReport.parse(this.logs, "Version is not valid: (.+)")) {
+                return new InvalidExecutableVersionError(failedExecutable, versionText);
+            }
         }
         return undefined;
     }
@@ -118,14 +123,18 @@ export class DebugReport {
     }
 
     private parse(pattern: string, defaultValue: any = undefined): string | undefined {
+        return DebugReport.parse(this.raw, pattern, defaultValue);
+    }
+
+    private static parse(raw: string, pattern: string, defaultValue: any = undefined): string | undefined {
         try {
             const r = new RegExp(pattern);
-            const s = this.raw.match(r)[1];
+            const s = raw.match(r)[1];
             return s;
         } catch (error) {
             console.error(error);
             return defaultValue;
-        }
+        }        
     }
 
     toJSON(): object {
@@ -161,8 +170,4 @@ export enum OperatingSystem {
     Mac,
     Windows,
     Linux
-}
-
-export enum BeautifyError {
-    InvalidVersion,
 }

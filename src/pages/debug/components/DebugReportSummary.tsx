@@ -1,6 +1,6 @@
 import * as React from "react";
-import { DebugReportInput } from "./DebugReportInput";
-import { DebugReport, BeautifyError } from "./DebugReport";
+import { DebugReportInput, DiagnoseBeautifyError } from "./";
+import { DebugReport, BeautifyError, BeautifyErrorType } from "../models";
 const { default: TimeAgo } = require('react-timeago') as any;
 
 export class DebugReportSummary extends React.Component<any, DebugState> {
@@ -23,16 +23,16 @@ export class DebugReportSummary extends React.Component<any, DebugState> {
                     <p>Selected Beautifier <span className="badge badge-default">{report.beautifier}</span>.</p>
                     */}
                     {/*<pre>{JSON.stringify(report, null, 2)}</pre>*/}
-                    {Object.keys(report.toJSON()).map(key => (
+                    {/*{Object.keys(report.toJSON()).map(key => (
                         <div key={key}>
                             <details>
                                 <summary>{key}</summary>
                                 <pre>{JSON.stringify(report.toJSON()[key], null, 2)}</pre>
                             </details>
                         </div>
-                    ))}
+                    ))}*/}
                     {report.hasError ?
-                        this.renderError(report.error) :
+                        (<DiagnoseBeautifyError error={report.error} />) :
                         (<div>Looks good to me!</div>)}
                 </div>
             );
@@ -44,8 +44,8 @@ export class DebugReportSummary extends React.Component<any, DebugState> {
     }
 
     private renderError(error: BeautifyError) {
-        switch (error) {
-            case BeautifyError.InvalidVersion:
+        switch (error.type) {
+            case BeautifyErrorType.InvalidExecutableVersion:
                 return (<div>Invalid version!</div>)
             default:
                 return (<div>Unknown error!!!</div>)

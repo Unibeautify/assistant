@@ -1,8 +1,7 @@
 import * as React from "react";
-import { DebugReportInput } from "./DebugReportInput";
-import { DebugReport } from "./DebugReport";
+import { DebugReportInput, DebugReportSummary } from "./components";
+import { DebugReport } from "./models";
 const { default: TimeAgo } = require('react-timeago') as any;
-import { DebugReportSummary } from "./DebugReportSummary";
 
 export class Debug extends React.Component<any, DebugState> {
 

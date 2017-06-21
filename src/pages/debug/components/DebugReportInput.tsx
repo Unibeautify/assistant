@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DebugReport } from "./DebugReport";
+import { DebugReport } from "../models";
 
 export class DebugReportInput extends React.Component<DebugReportInputProps, DebugReportInputState> {
 

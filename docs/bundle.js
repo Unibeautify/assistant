@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0e925de0f12133b5849c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "6020e0860cb99d3319d3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -37588,12 +37588,328 @@ exports.Config = Config;
 
 /***/ }),
 
-/***/ "./src/pages/debug/DebugReport.ts":
+/***/ "./src/pages/debug/components/DebugReportInput.tsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__("./node_modules/react/react.js");
+var models_1 = __webpack_require__("./src/pages/debug/models/index.ts");
+var DebugReportInput = (function (_super) {
+    __extends(DebugReportInput, _super);
+    function DebugReportInput(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            value: ''
+        };
+        return _this;
+    }
+    DebugReportInput.prototype.render = function () {
+        return (React.createElement("div", null,
+            React.createElement("details", null,
+                React.createElement("summary", null, "Click here if you do not know how to retrieve the debugging report."),
+                React.createElement("p", null,
+                    "1. Open the ",
+                    React.createElement("a", { href: "https://atom.io/packages/command-palette", target: "_blank" }, "Command Palette"),
+                    " using ",
+                    React.createElement("kbd", null, "cmd-shift-p"),
+                    " (macOS) or ",
+                    React.createElement("kbd", null, "ctrl-shift-p"),
+                    " (Linux/Windows) in Atom.",
+                    React.createElement("img", { className: "img-fluid", src: "https://i.github-camo.com/66a8b9f48e16131197cca2ca3ffebde9e8679c99/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f3637313337382f323234313335342f32393038623736382d396363642d313165332d396461312d6131313735336330343935642e706e67", alt: "command palette" })),
+                React.createElement("p", null,
+                    "2. Search for command ",
+                    React.createElement("kbd", null, "Atom Beautify: Help Debug Editor"),
+                    " and run it."),
+                React.createElement("p", null, "3. Copy resulting debugging information.")),
+            React.createElement("form", null,
+                React.createElement("div", { className: "form-group" },
+                    React.createElement("textarea", { className: "form-control", id: "debugReport", rows: 5, defaultValue: "", placeholder: "Paste debug report here.", onChange: this.handleChange.bind(this), value: this.value })))));
+    };
+    DebugReportInput.prototype.handleChange = function (event) {
+        var value = event.target.value;
+        this.setState({ value: value });
+        var report = new models_1.DebugReport(value);
+        this.props.debugReportChange(report);
+    };
+    Object.defineProperty(DebugReportInput.prototype, "value", {
+        get: function () {
+            return this.state.value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return DebugReportInput;
+}(React.Component));
+exports.DebugReportInput = DebugReportInput;
+
+
+ ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/components/DebugReportInput.tsx"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/components/DebugReportInput.tsx"); } } })();
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/node-libs-browser/node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./src/pages/debug/components/DebugReportSummary.tsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__("./node_modules/react/react.js");
+var _1 = __webpack_require__("./src/pages/debug/components/index.ts");
+var models_1 = __webpack_require__("./src/pages/debug/models/index.ts");
+var TimeAgo = __webpack_require__("./node_modules/react-timeago/lib/index.js").default;
+var DebugReportSummary = (function (_super) {
+    __extends(DebugReportSummary, _super);
+    function DebugReportSummary() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    DebugReportSummary.prototype.render = function () {
+        var report = this.props.report;
+        if (report.isValid) {
+            return (React.createElement("div", null,
+                React.createElement("p", null,
+                    "Thanks! I see this was generated ",
+                    React.createElement(TimeAgo, { date: report.date }),
+                    "."),
+                report.hasError ?
+                    (React.createElement(_1.DiagnoseBeautifyError, { error: report.error })) :
+                    (React.createElement("div", null, "Looks good to me!"))));
+        }
+        else {
+            return (React.createElement("div", null, "This doesn't look right. Please try again."));
+        }
+    };
+    DebugReportSummary.prototype.renderError = function (error) {
+        switch (error.type) {
+            case models_1.BeautifyErrorType.InvalidExecutableVersion:
+                return (React.createElement("div", null, "Invalid version!"));
+            default:
+                return (React.createElement("div", null, "Unknown error!!!"));
+        }
+    };
+    return DebugReportSummary;
+}(React.Component));
+exports.DebugReportSummary = DebugReportSummary;
+
+
+ ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/components/DebugReportSummary.tsx"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/components/DebugReportSummary.tsx"); } } })();
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/node-libs-browser/node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./src/pages/debug/components/DiagnoseBeautifyError.tsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__("./node_modules/react/react.js");
+var models_1 = __webpack_require__("./src/pages/debug/models/index.ts");
+var DiagnoseBeautifyError = (function (_super) {
+    __extends(DiagnoseBeautifyError, _super);
+    function DiagnoseBeautifyError() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    DiagnoseBeautifyError.prototype.render = function () {
+        return (React.createElement("div", { className: "alert alert-danger", role: "alert" },
+            React.createElement("p", null, "I found an error!"),
+            React.createElement("div", null, this.renderError())));
+    };
+    Object.defineProperty(DiagnoseBeautifyError.prototype, "error", {
+        get: function () {
+            return this.props.error;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    DiagnoseBeautifyError.prototype.renderError = function () {
+        var error = this.error;
+        switch (error.type) {
+            case models_1.BeautifyErrorType.InvalidExecutableVersion:
+                return this.renderInvalidExecutableVersionError();
+            default:
+                return (React.createElement("div", null, "Unknown error!!!"));
+        }
+    };
+    DiagnoseBeautifyError.prototype.renderInvalidExecutableVersionError = function () {
+        var error = this.error;
+        var title = "Executable \"" + error.executable + "\" cannot parse version \"" + error.version + "\"";
+        var url = "https://github.com/Glavin001/atom-beautify/issues/new?title=" + title;
+        return (React.createElement("div", null,
+            "The version of executable \"",
+            React.createElement("strong", null, error.executable),
+            "\" could not be properly parsed from \"",
+            React.createElement("strong", null, error.version),
+            "\". If you think this is a bug please report it by clicking ",
+            React.createElement("a", { href: url, target: "_blank", className: "alert-link" }, "here"),
+            "."));
+    };
+    return DiagnoseBeautifyError;
+}(React.Component));
+exports.DiagnoseBeautifyError = DiagnoseBeautifyError;
+
+
+ ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/components/DiagnoseBeautifyError.tsx"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/components/DiagnoseBeautifyError.tsx"); } } })();
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/node-libs-browser/node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./src/pages/debug/components/index.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+__export(__webpack_require__("./src/pages/debug/components/DebugReportInput.tsx"));
+__export(__webpack_require__("./src/pages/debug/components/DebugReportSummary.tsx"));
+__export(__webpack_require__("./src/pages/debug/components/DiagnoseBeautifyError.tsx"));
+
+
+ ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/components/index.ts"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/components/index.ts"); } } })();
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/node-libs-browser/node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./src/pages/debug/index.tsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__("./node_modules/react/react.js");
+var components_1 = __webpack_require__("./src/pages/debug/components/index.ts");
+var TimeAgo = __webpack_require__("./node_modules/react-timeago/lib/index.js").default;
+var Debug = (function (_super) {
+    __extends(Debug, _super);
+    function Debug(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            report: undefined
+        };
+        return _this;
+    }
+    Debug.prototype.render = function () {
+        var _this = this;
+        var report = this.state.report;
+        return (React.createElement("div", { className: "container" },
+            React.createElement("div", { className: "jumbotron text-center" },
+                React.createElement("h1", { className: "display-3" },
+                    "Debugging ",
+                    React.createElement("span", { style: { "whiteSpace": "nowrap" } }, "Atom-Beautify")),
+                React.createElement("p", null, "Are you experiencing unexpected beautification results? Let's see if we can figure this out together!")),
+            React.createElement("div", null,
+                React.createElement("h2", null, "Your Information"),
+                React.createElement("p", null, "Please generate the debugging report within Atom-Beautify and paste it below."),
+                React.createElement(components_1.DebugReportInput, { debugReportChange: function (report) { return _this.setState({ report: report }); } })),
+            report && React.createElement(components_1.DebugReportSummary, { report: report })));
+    };
+    return Debug;
+}(React.Component));
+exports.Debug = Debug;
+
+
+ ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/index.tsx"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/index.tsx"); } } })();
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/node-libs-browser/node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./src/pages/debug/models/BeautifyError.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var BeautifyError = (function () {
+    function BeautifyError() {
+    }
+    return BeautifyError;
+}());
+exports.BeautifyError = BeautifyError;
+var BeautifyErrorType;
+(function (BeautifyErrorType) {
+    BeautifyErrorType[BeautifyErrorType["InvalidExecutableVersion"] = 0] = "InvalidExecutableVersion";
+})(BeautifyErrorType = exports.BeautifyErrorType || (exports.BeautifyErrorType = {}));
+var InvalidExecutableVersionError = (function (_super) {
+    __extends(InvalidExecutableVersionError, _super);
+    function InvalidExecutableVersionError(executable, version) {
+        var _this = _super.call(this) || this;
+        _this.executable = executable;
+        _this.version = version;
+        _this.type = BeautifyErrorType.InvalidExecutableVersion;
+        return _this;
+    }
+    return InvalidExecutableVersionError;
+}(BeautifyError));
+exports.InvalidExecutableVersionError = InvalidExecutableVersionError;
+
+
+ ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/models/BeautifyError.ts"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/models/BeautifyError.ts"); } } })();
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/node-libs-browser/node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./src/pages/debug/models/DebugReport.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 Object.defineProperty(exports, "__esModule", { value: true });
+var BeautifyError_1 = __webpack_require__("./src/pages/debug/models/BeautifyError.ts");
 var DebugReport = (function () {
     function DebugReport(raw) {
         this.raw = raw;
@@ -37763,8 +38079,12 @@ var DebugReport = (function () {
     });
     Object.defineProperty(DebugReport.prototype, "error", {
         get: function () {
-            if (this.output.indexOf("Could not find") !== -1 && this.logs.indexOf("Version is not valid") !== -1) {
-                return BeautifyError.InvalidVersion;
+            var failedExecutable;
+            if (failedExecutable = DebugReport.parse(this.logs, "Error loading executables.+ Could not find '(.+)'.")) {
+                var versionText = void 0;
+                if (versionText = DebugReport.parse(this.logs, "Version is not valid: (.+)")) {
+                    return new BeautifyError_1.InvalidExecutableVersionError(failedExecutable, versionText);
+                }
             }
             return undefined;
         },
@@ -37784,9 +38104,13 @@ var DebugReport = (function () {
     };
     DebugReport.prototype.parse = function (pattern, defaultValue) {
         if (defaultValue === void 0) { defaultValue = undefined; }
+        return DebugReport.parse(this.raw, pattern, defaultValue);
+    };
+    DebugReport.parse = function (raw, pattern, defaultValue) {
+        if (defaultValue === void 0) { defaultValue = undefined; }
         try {
             var r = new RegExp(pattern);
-            var s = this.raw.match(r)[1];
+            var s = raw.match(r)[1];
             return s;
         }
         catch (error) {
@@ -37829,201 +38153,27 @@ var OperatingSystem;
     OperatingSystem[OperatingSystem["Windows"] = 1] = "Windows";
     OperatingSystem[OperatingSystem["Linux"] = 2] = "Linux";
 })(OperatingSystem = exports.OperatingSystem || (exports.OperatingSystem = {}));
-var BeautifyError;
-(function (BeautifyError) {
-    BeautifyError[BeautifyError["InvalidVersion"] = 0] = "InvalidVersion";
-})(BeautifyError = exports.BeautifyError || (exports.BeautifyError = {}));
 
 
- ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/DebugReport.ts"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/DebugReport.ts"); } } })();
+ ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/models/DebugReport.ts"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/models/DebugReport.ts"); } } })();
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/node-libs-browser/node_modules/process/browser.js")))
 
 /***/ }),
 
-/***/ "./src/pages/debug/DebugReportInput.tsx":
+/***/ "./src/pages/debug/models/index.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
 Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__("./node_modules/react/react.js");
-var DebugReport_1 = __webpack_require__("./src/pages/debug/DebugReport.ts");
-var DebugReportInput = (function (_super) {
-    __extends(DebugReportInput, _super);
-    function DebugReportInput(props) {
-        var _this = _super.call(this, props) || this;
-        _this.state = {
-            value: ''
-        };
-        return _this;
-    }
-    DebugReportInput.prototype.render = function () {
-        return (React.createElement("div", null,
-            React.createElement("details", null,
-                React.createElement("summary", null, "Click here if you do not know how to retrieve the debugging report."),
-                React.createElement("p", null,
-                    "1. Open the ",
-                    React.createElement("a", { href: "https://atom.io/packages/command-palette", target: "_blank" }, "Command Palette"),
-                    " using ",
-                    React.createElement("kbd", null, "cmd-shift-p"),
-                    " (macOS) or ",
-                    React.createElement("kbd", null, "ctrl-shift-p"),
-                    " (Linux/Windows) in Atom.",
-                    React.createElement("img", { className: "img-fluid", src: "https://i.github-camo.com/66a8b9f48e16131197cca2ca3ffebde9e8679c99/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f3637313337382f323234313335342f32393038623736382d396363642d313165332d396461312d6131313735336330343935642e706e67", alt: "command palette" })),
-                React.createElement("p", null,
-                    "2. Search for command ",
-                    React.createElement("kbd", null, "Atom Beautify: Help Debug Editor"),
-                    " and run it."),
-                React.createElement("p", null, "3. Copy resulting debugging information.")),
-            React.createElement("form", null,
-                React.createElement("div", { className: "form-group" },
-                    React.createElement("textarea", { className: "form-control", id: "debugReport", rows: 5, defaultValue: "", placeholder: "Paste debug report here.", onChange: this.handleChange.bind(this), value: this.value })))));
-    };
-    DebugReportInput.prototype.handleChange = function (event) {
-        var value = event.target.value;
-        this.setState({ value: value });
-        var report = new DebugReport_1.DebugReport(value);
-        this.props.debugReportChange(report);
-    };
-    Object.defineProperty(DebugReportInput.prototype, "value", {
-        get: function () {
-            return this.state.value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    return DebugReportInput;
-}(React.Component));
-exports.DebugReportInput = DebugReportInput;
+__export(__webpack_require__("./src/pages/debug/models/BeautifyError.ts"));
+__export(__webpack_require__("./src/pages/debug/models/DebugReport.ts"));
 
 
- ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/DebugReportInput.tsx"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/DebugReportInput.tsx"); } } })();
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/node-libs-browser/node_modules/process/browser.js")))
-
-/***/ }),
-
-/***/ "./src/pages/debug/DebugReportSummary.tsx":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__("./node_modules/react/react.js");
-var DebugReport_1 = __webpack_require__("./src/pages/debug/DebugReport.ts");
-var TimeAgo = __webpack_require__("./node_modules/react-timeago/lib/index.js").default;
-var DebugReportSummary = (function (_super) {
-    __extends(DebugReportSummary, _super);
-    function DebugReportSummary() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    DebugReportSummary.prototype.render = function () {
-        var report = this.props.report;
-        if (report.isValid) {
-            return (React.createElement("div", null,
-                React.createElement("p", null,
-                    "Thanks! I see this was generated ",
-                    React.createElement(TimeAgo, { date: report.date }),
-                    "."),
-                Object.keys(report.toJSON()).map(function (key) { return (React.createElement("div", { key: key },
-                    React.createElement("details", null,
-                        React.createElement("summary", null, key),
-                        React.createElement("pre", null, JSON.stringify(report.toJSON()[key], null, 2))))); }),
-                report.hasError ?
-                    this.renderError(report.error) :
-                    (React.createElement("div", null, "Looks good to me!"))));
-        }
-        else {
-            return (React.createElement("div", null, "This doesn't look right. Please try again."));
-        }
-    };
-    DebugReportSummary.prototype.renderError = function (error) {
-        switch (error) {
-            case DebugReport_1.BeautifyError.InvalidVersion:
-                return (React.createElement("div", null, "Invalid version!"));
-            default:
-                return (React.createElement("div", null, "Unknown error!!!"));
-        }
-    };
-    return DebugReportSummary;
-}(React.Component));
-exports.DebugReportSummary = DebugReportSummary;
-
-
- ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/DebugReportSummary.tsx"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/DebugReportSummary.tsx"); } } })();
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/node-libs-browser/node_modules/process/browser.js")))
-
-/***/ }),
-
-/***/ "./src/pages/debug/index.tsx":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__("./node_modules/react/react.js");
-var DebugReportInput_1 = __webpack_require__("./src/pages/debug/DebugReportInput.tsx");
-var TimeAgo = __webpack_require__("./node_modules/react-timeago/lib/index.js").default;
-var DebugReportSummary_1 = __webpack_require__("./src/pages/debug/DebugReportSummary.tsx");
-var Debug = (function (_super) {
-    __extends(Debug, _super);
-    function Debug(props) {
-        var _this = _super.call(this, props) || this;
-        _this.state = {
-            report: undefined
-        };
-        return _this;
-    }
-    Debug.prototype.render = function () {
-        var _this = this;
-        var report = this.state.report;
-        return (React.createElement("div", { className: "container" },
-            React.createElement("div", { className: "jumbotron text-center" },
-                React.createElement("h1", { className: "display-3" },
-                    "Debugging ",
-                    React.createElement("span", { style: { "whiteSpace": "nowrap" } }, "Atom-Beautify")),
-                React.createElement("p", null, "Are you experiencing unexpected beautification results? Let's see if we can figure this out together!")),
-            React.createElement("div", null,
-                React.createElement("h2", null, "Your Information"),
-                React.createElement("p", null, "Please generate the debugging report within Atom-Beautify and paste it below."),
-                React.createElement(DebugReportInput_1.DebugReportInput, { debugReportChange: function (report) { return _this.setState({ report: report }); } })),
-            report && React.createElement(DebugReportSummary_1.DebugReportSummary, { report: report })));
-    };
-    return Debug;
-}(React.Component));
-exports.Debug = Debug;
-
-
- ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/index.tsx"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/index.tsx"); } } })();
+ ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/models/index.ts"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/glavin/Development/unibeautify/assistant/src/pages/debug/models/index.ts"); } } })();
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/node-libs-browser/node_modules/process/browser.js")))
 
 /***/ }),
