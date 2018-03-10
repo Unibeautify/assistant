@@ -6,17 +6,12 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const outputDir = "docs";
 module.exports = {
     entry: [
-        "react-hot-loader/patch",
-        "bootstrap-loader",
         "./src/index.tsx",
     ],
     output: {
         path: path.join(__dirname, outputDir),
         filename: "bundle.js",
     },
-
-    // Enable sourcemaps for debugging webpack's output.
-    devtool: "source-map",
 
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
@@ -25,9 +20,8 @@ module.exports = {
 
     plugins: [
         new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
-            title: 'Assistant',
+            title: 'Unibeautify Playground',
             chunksSortMode: 'dependency',
             template: path.resolve(__dirname, './src/index.ejs')
         }),
@@ -35,32 +29,31 @@ module.exports = {
     ],
 
     module: {
-        loaders: [
-            // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
+        rules: [
             {
-                test: /\.tsx?$/,
-                loaders: [
-                    "react-hot-loader/webpack",
-                    "awesome-typescript-loader"
-                ],
-                exclude: path.resolve(__dirname, 'node_modules'),
-                include: path.resolve(__dirname, "src"),
+              test: /\.tsx?$/,
+              use: [
+                {
+                  loader: "babel-loader",
+                  options: {
+                    plugins: ["react-hot-loader/babel"],
+                  },
+                },
+                "awesome-typescript-loader",
+              ],
+              exclude: path.resolve(__dirname, 'node_modules'),
+              include: path.resolve(__dirname, "src"),
             },
-            // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
             {
                 enforce: "pre",
                 test: /\.js$/,
-                loader: "source-map-loader"
+                use: ["source-map-loader"],
+                exclude: path.resolve(__dirname, 'node_modules'),
             },
             {
                 test: /\.css$/,
-                loaders: [ 'style-loader', 'css-loader' ]
+                use: [ 'style-loader', 'css-loader' ],
             }
         ]
-    },
-
-    devServer: {
-        hot: true
     }
-
 };
