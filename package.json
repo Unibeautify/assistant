@@ -6,12 +6,15 @@
   "dependencies": {
     "babel-loader": "^7.1.4",
     "expose-loader": "^0.7.5",
+    "highlight.js": "^9.12.0",
     "html-webpack-plugin": "^3.2.0",
     "node-static": "^0.7.9",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
+    "react-highlight": "^0.12.0"
   },
   "devDependencies": {
+    "@types/highlight.js": "^9.12.2",
     "@types/react": "^16.3.10",
     "@types/react-dom": "^16.0.5",
     "@types/react-router-dom": "^4.2.6",

@@ -5,6 +5,8 @@ module.exports = merge(common, {
   mode: 'development',
   devtool: 'eval',
   devServer: {
-    hot: true
+    hot: true,
+    port: 3000,
+    host: "0.0.0.0"
   }
 });

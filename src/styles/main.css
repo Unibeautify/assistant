@@ -1,3 +1,37 @@
 html, body {
     font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
 }
+
+button {
+  margin: 5px 5px;
+}
+
+label {
+  color: #000000;
+}
+
+.card {
+  width: 15rem;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.card:nth-child(2) {
+  margin: 0px 50px;
+}
+
+.card-header {
+  color: #000000;
+}
+
+.card-body pre {
+  height: 10rem;
+}
+
+.text-left {
+  text-align: left
+}
+
+.hljs {
+  background-color: inherit;
+}
