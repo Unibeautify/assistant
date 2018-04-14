@@ -21,7 +21,7 @@ module.exports = {
     plugins: [
         new webpack.NamedModulesPlugin(),
         new HtmlWebpackPlugin({
-            title: 'Unibeautify Playground',
+            title: 'Unibeautify Assistant',
             chunksSortMode: 'dependency',
             template: path.resolve(__dirname, './src/index.ejs')
         }),
