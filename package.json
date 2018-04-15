@@ -11,7 +11,8 @@
     "node-static": "^0.7.9",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
-    "react-highlight": "^0.12.0"
+    "react-highlight": "^0.12.0",
+    "unibeautify": "^0.12.1"
   },
   "devDependencies": {
     "@types/highlight.js": "^9.12.2",

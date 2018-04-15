@@ -1,7 +1,10 @@
 import * as React from "react";
+import { Language } from "unibeautify";
 
 export class SelectLanguages extends React.Component<any, any> {
 
+  // Lists all of the languages as checkboxes for the user to select
+  // Try to keep already selected options in place if user adds/removes languages
   private get languageNames(): string[] {
     // return this.supportedLanguages.map(lang => lang.name);
     return ["Javascript", "CSS"];
@@ -26,11 +29,12 @@ export class SelectLanguages extends React.Component<any, any> {
     </fieldset>
     );
   }
-    render() {
-        return (
-          <div>
-            {this.renderLanguageSelect()}
-          </div>
-        );
-    }
+
+  render() {
+    return (
+      <div>
+        {this.renderLanguageSelect()}
+      </div>
+    );
+  }
 }

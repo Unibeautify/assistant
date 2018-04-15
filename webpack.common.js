@@ -28,6 +28,11 @@ module.exports = {
         new CleanWebpackPlugin([outputDir])
     ],
 
+    externals: [
+         "child_process",
+         "requireg",
+     ],    
+
     module: {
         rules: [
             {

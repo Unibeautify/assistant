@@ -3,10 +3,14 @@ import { OptionButton } from "./option-button";
 
 export class SelectOptions extends React.Component<any, any> {
 
+  // The option buttons are dependent on whatever the option is
+  // So keep track of the option in the state
+  // and switch the option buttons whenever the optionName changes
   constructor(props: any) {
     super(props);
     this.state = {
-      language: "javascript"
+      language: "javascript",
+      optionName: props.stepName
     };
   }
 

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { SelectLanguages } from "./select-languages";
 import { SelectOptions } from "./select-options";
+import { Language } from "unibeautify";
 require("highlight.js/lib/highlight.js");
 require("highlight.js/styles/default.css");
 
@@ -12,10 +13,12 @@ export class Wizard extends React.Component<any, any> {
     super(props);
     this.state = {
       currentStep: 1,
-      preStepName: "Languages",
-      nexStepName: "Braces",
-      stepName: "languages"
+      preStepName: "Prev",
+      nexStepName: "Next",
+      stepName: "Languages"
     };
+    // Set to number of options based on the languages
+    // After the languages have been selected, + 1
     this.totalSteps = 10;
     this.next = this.next.bind(this);
     this.prev = this.prev.bind(this);
@@ -24,7 +27,7 @@ export class Wizard extends React.Component<any, any> {
   next() {
     let currentStep = this.state.currentStep;
     if (currentStep >= this.totalSteps-1) {
-      currentStep = this.totalSteps; // Set to number of options
+      currentStep = this.totalSteps;
     }
     else {
       currentStep = currentStep + 1;
@@ -32,6 +35,9 @@ export class Wizard extends React.Component<any, any> {
 
     this.setState({
       currentStep: currentStep
+      // Set stepName to the next option
+
+      // Nice to have
       //preStepName: Get previous option name to use for button text
       //nexStepName: Get next option name to use for button text
     });
@@ -47,7 +53,10 @@ export class Wizard extends React.Component<any, any> {
     }
 
     this.setState({
-      currentStep: currentStep
+      currentStep: currentStep,
+      // Set stepName to the next option
+      
+      // Nice to have
       //preStepName: Get previous option name to use for button text
       //nexStepName: Get next option name to use for button text
     });
@@ -61,7 +70,7 @@ export class Wizard extends React.Component<any, any> {
           <SelectLanguages />
         }
         {this.state.currentStep > 1 &&
-          <SelectOptions />
+          <SelectOptions stepName="brace_style" />
         }
         <div className="text-center">
           {this.state.currentStep > 1 &&
@@ -70,7 +79,7 @@ export class Wizard extends React.Component<any, any> {
           {this.state.currentStep !== this.totalSteps &&
             <button className="btn btn-primary" onClick={this.next}>{this.state.nexStepName} &gt;</button>
           }
-          <div>Option {this.state.currentStep} of {this.totalSteps}</div>
+          <div>Step {this.state.currentStep} of {this.totalSteps}</div>
         </div>
       </div>
     );
