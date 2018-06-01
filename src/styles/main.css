@@ -11,13 +11,13 @@ label {
 }
 
 .card {
-  width: 15rem;
+  width: 20rem;
   cursor: pointer;
   display: inline-block;
 }
 
 .card:nth-child(2) {
-  margin: 0px 50px;
+  margin: 0px 25px;
 }
 
 .card-header {
@@ -34,4 +34,17 @@ label {
 
 .hljs {
   background-color: inherit;
+}
+
+.sideNav {
+  background-color: #ffffff;
+}
+
+.sideNav a {
+  display: block;
+  margin: 5px;
+}
+
+.sideNav a.selected {
+  font-weight: bold;
 }

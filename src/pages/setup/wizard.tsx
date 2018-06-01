@@ -55,7 +55,7 @@ export class Wizard extends React.Component<any, any> {
     this.setState({
       currentStep: currentStep,
       // Set stepName to the next option
-      
+
       // Nice to have
       //preStepName: Get previous option name to use for button text
       //nexStepName: Get next option name to use for button text
@@ -64,22 +64,30 @@ export class Wizard extends React.Component<any, any> {
 
   render() {
     return(
-      <div>
-        <h2>{this.state.stepName}</h2>
-        {this.state.currentStep === 1 &&
-          <SelectLanguages />
-        }
-        {this.state.currentStep > 1 &&
-          <SelectOptions stepName="brace_style" />
-        }
-        <div className="text-center">
+      <div className="row">
+        <div className="col-sm-2 sideNav">
+          <a href="#" className="selected">Languages</a>
+          {/* Bind options based on languages selected */}
+          <a href="#">Option 1</a>
+          <a href="#">Finish</a>
+        </div>
+        <div className="col-sm-10">
+          <h2>{this.state.stepName}</h2>
+          {this.state.currentStep === 1 &&
+            <SelectLanguages />
+          }
           {this.state.currentStep > 1 &&
-            <button className="btn btn-primary" onClick={this.prev}>&lt; {this.state.preStepName}</button>
+            <SelectOptions stepName="brace_style" />
           }
-          {this.state.currentStep !== this.totalSteps &&
-            <button className="btn btn-primary" onClick={this.next}>{this.state.nexStepName} &gt;</button>
-          }
-          <div>Step {this.state.currentStep} of {this.totalSteps}</div>
+          <div className="text-center">
+            {this.state.currentStep > 1 &&
+              <button className="btn btn-primary" onClick={this.prev}>&lt; {this.state.preStepName}</button>
+            }
+            {this.state.currentStep !== this.totalSteps &&
+              <button className="btn btn-primary" onClick={this.next}>{this.state.nexStepName} &gt;</button>
+            }
+            <div>Step {this.state.currentStep} of {this.totalSteps}</div>
+          </div>
         </div>
       </div>
     );

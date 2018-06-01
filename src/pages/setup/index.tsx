@@ -5,8 +5,8 @@ export class Setup extends React.Component<any, any> {
     render() {
         return (
             <div className="container">
-                <div className="jumbotron text-center">
-                    <h1 className="display-3">Setup</h1>
+                <div className="jumbotron">
+                    <h1 className="display-3 text-center">Setup</h1>
                     <Wizard />
                 </div>
             </div>
