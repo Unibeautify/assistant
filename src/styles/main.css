@@ -25,7 +25,7 @@ label {
 }
 
 .card-body pre {
-  height: 10rem;
+  min-height: 10rem;
 }
 
 .text-left {
@@ -38,6 +38,8 @@ label {
 
 .sideNav {
   background-color: #ffffff;
+  max-height: 800px;
+  overflow-y: scroll;
 }
 
 .sideNav a {

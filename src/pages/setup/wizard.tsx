@@ -1,6 +1,15 @@
 import * as React from "react";
-import { Language, LanguageOptionValues, OptionValues } from "unibeautify";
+import {
+  Language,
+  LanguageOptionValues,
+  OptionValues,
+  OptionsRegistry,
+  Option
+} from "unibeautify";
+import * as _ from "lodash";
+import Highlight from "react-highlight";
 
+import { Card } from "./card";
 import { SelectLanguages } from "./select-languages";
 import { SelectOptions } from "./select-options";
 import { SupportResponse } from "../../ApiClient";
@@ -18,40 +27,127 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
   }
 
   private get steps(): Step[] {
-    return [
-      {
-        name: "Choose languages",
-        render: () => {
-          return (
-            <SelectLanguages
-              allLanguages={this.allLanguageNames}
-              selectedLanguages={this.selectedLanguageNames}
-              toggleLanguage={this.toggleLanguage}
-            />
-          );
-        }
+    const steps = [this.chooseLanguageStep, ...this.languageSteps];
+    if (this.selectedLanguageNames.length > 0) {
+      steps.push(this.exportConfigStep);
+    }
+    return steps;
+  }
+
+  private get chooseLanguageStep(): Step {
+    return {
+      name: "Choose languages",
+      render: () => {
+        return (
+          <SelectLanguages
+            allLanguages={this.allLanguageNames}
+            selectedLanguages={this.selectedLanguageNames}
+            toggleLanguage={this.toggleLanguage}
+          />
+        );
+      }
+    };
+  }
+
+  private get exportConfigStep(): Step {
+    return {
+      name: "Export configuration",
+      render: () => {
+        return (
+          <div>
+            <Card
+              header={"JSON"}
+              style={{
+                width: "100%",
+                minHeight: "400px"
+              }}
+            >
+              <Highlight className={"JSON"}>
+                {JSON.stringify(this.state.options, null, 2)}
+              </Highlight>
+            </Card>
+          </div>
+        );
+      }
+    };
+  }
+
+  private get languageSteps(): Step[] {
+    return this.selectedLanguageNames.reduce(
+      (steps, languageName) => {
+        return [...steps, ...this.stepsForLanguage(languageName)];
       },
-      ...this.selectedLanguageNames.map(name => ({
-        name,
-        render() {
-          return (
-            <div>
-              <SelectOptions stepName="brace_style" />
-            </div>
-          );
-        }
-      })),
-      {
-        name: "Export configuration",
+      [] as Step[]
+    );
+  }
+
+  private stepsForLanguage(languageName: string) {
+    const options = this.optionsForLanguage(languageName);
+    return Object.keys(options).map(optionKey => {
+      const option = options[optionKey];
+      const optionName: string = this.optionName(optionKey, option);
+      return {
+        name: `${languageName}: ${optionName}`,
         render: () => {
           return (
             <div>
-              <pre>{JSON.stringify(this.state.options, null, 2)}</pre>
+              <SelectOptions
+                optionKey={optionKey}
+                option={option}
+                languageName={languageName}
+                value={this.valueForLanguageOption(languageName, optionKey)}
+                setValue={this.setValue}
+              />
             </div>
           );
+        }
+      };
+    });
+  }
+
+  private setValue = ({
+    value,
+    language,
+    optionKey
+  }: {
+    value: any;
+    language: string;
+    optionKey: string;
+  }): void => {
+    this.setState(prevState => ({
+      ...prevState,
+      options: {
+        ...prevState.options,
+        [language]: {
+          ..._.get(prevState.options, language, {}),
+          [optionKey]: value
         }
       }
-    ];
+    }));
+    this.next();
+  };
+
+  private valueForLanguageOption(languageName: string, optionKey: string): any {
+    return _.get(this.state.options, [languageName, optionKey]);
+  }
+
+  private optionName(optionKey: string, option: Option): string {
+    let title: string = option.title || "";
+    if (!option.title) {
+      title = optionKeyToTitle(optionKey);
+    }
+    return title;
+  }
+
+  private optionsForLanguage(languageName: string): OptionsRegistry {
+    const support = this.supportForLanguage(languageName);
+    return support ? support.options : {};
+  }
+
+  private supportForLanguage(languageName: string) {
+    return this.props.support.languages.find(
+      lang => lang.name === languageName
+    );
   }
 
   private get totalSteps(): number {
@@ -70,7 +166,11 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
   }
 
   private addLanguage(languageName: string): void {
-    this.setLanguageOptions(languageName, {});
+    const support = this.supportForLanguage(languageName);
+    const beautifiers = support ? support.beautifiers : [];
+    this.setLanguageOptions(languageName, {
+      beautifiers
+    } as any);
   }
 
   private setLanguageOptions(
@@ -108,6 +208,20 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     const { currentStep } = this.state;
     return Math.max(0, Math.min(steps.length - 1, currentStep));
   }
+
+  private goToStart = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      currentStep: 0
+    }));
+  };
+
+  private goToEnd = () => {
+    this.setState(prevState => ({
+      ...prevState,
+      currentStep: this.steps.length - 1
+    }));
+  };
 
   private next = () => {
     this.setState(prevState => ({
@@ -153,14 +267,24 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
           </div>
           <div className="">
             {this.currentStep > 0 && (
-              <button className="btn btn-primary" onClick={this.prev}>
-                &lt; Previous
-              </button>
+              <span>
+                <button className="btn btn-success" onClick={this.goToStart}>
+                  &lt;&lt; Choose Languages
+                </button>
+                <button className="btn btn-primary" onClick={this.prev}>
+                  &lt; Previous
+                </button>
+              </span>
             )}
             {this.state.currentStep + 1 < this.totalSteps && (
-              <button className="btn btn-primary" onClick={this.next}>
-                Next &gt;
-              </button>
+              <span>
+                <button className="btn btn-primary" onClick={this.next}>
+                  Next &gt;
+                </button>
+                <button className="btn btn-success" onClick={this.goToEnd}>
+                  Export Config &gt;&gt;
+                </button>
+              </span>
             )}
             <div>
               Step {this.currentStep + 1} of {this.totalSteps}
@@ -190,7 +314,7 @@ const SideMenuItem: React.StatelessComponent<SideMenuItemProps> = ({
 }: SideMenuItemProps) => {
   return (
     <a onClick={() => setStep(index)} className={selected ? "selected" : ""}>
-      {name}
+      {index + 1}. {name}
     </a>
   );
 };
@@ -227,4 +351,11 @@ const StepView: React.StatelessComponent<StepViewProps> = ({
 export interface StepViewProps {
   index: number;
   step: Step;
+}
+
+function optionKeyToTitle(optionKey: string): string {
+  return optionKey
+    .split("_")
+    .map(_.capitalize)
+    .join(" ");
 }
