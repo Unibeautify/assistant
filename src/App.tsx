@@ -6,7 +6,7 @@ import {
 import { hot } from "react-hot-loader";
 import { Welcome } from "./Welcome";
 import { Config, Debug, Setup } from "./pages";
-require('./styles/lux.css');
+require('./styles/bootstraptheme.css');
 require('./styles/main.css');
 
 const App = () => (
