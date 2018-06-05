@@ -16,7 +16,15 @@ label {
   display: inline-block;
 }
 
-.card:nth-child(2) {
+.border-success {
+  border-width: 2px;
+}
+
+.card:hover {
+  border-color: #3498DB !important;
+}
+
+.card:nth-child(2), .card:nth-child(3n+5) {
   margin: 0px 25px;
 }
 
@@ -36,17 +44,7 @@ label {
   background-color: inherit;
 }
 
-.sideNav {
-  background-color: #ffffff;
-  max-height: 800px;
-  overflow-y: scroll;
-}
-
-.sideNav a {
-  display: block;
-  margin: 5px;
-}
-
-.sideNav a.selected {
-  font-weight: bold;
+.list-group-item {
+  min-width: 340px;
+  max-width: 340px;
 }

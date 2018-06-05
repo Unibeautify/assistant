@@ -260,7 +260,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
             />
           ))}
         </SideMenu>
-        <div className="col-sm-10">
+        <div className="col-sm-9">
           <h2>{step.name}</h2>
           <div>
             <StepView index={currentStep} step={step} />
@@ -299,7 +299,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
 const SideMenu: React.StatelessComponent<SideMenuProps> = ({
   children
 }: SideMenuProps) => {
-  return <div className="col-sm-2 sideNav">{children}</div>;
+  return <div className="list-group">{children}</div>;
 };
 
 export interface SideMenuProps {
@@ -313,7 +313,7 @@ const SideMenuItem: React.StatelessComponent<SideMenuItemProps> = ({
   setStep
 }: SideMenuItemProps) => {
   return (
-    <a onClick={() => setStep(index)} className={selected ? "selected" : ""}>
+    <a onClick={() => setStep(index)} className={`list-group-item list-group-item-action${selected ? " active" : ""}`} href="#">
       {index + 1}. {name}
     </a>
   );
