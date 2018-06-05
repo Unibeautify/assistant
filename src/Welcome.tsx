@@ -7,8 +7,8 @@ export class Welcome extends React.Component<any, any> {
     render() {
         return (
             <div className="container">
-                <div className="jumbotron text-center">
-                    <h1 className="display-3">Welcome</h1>
+                <div className="text-center">
+                    <h1 className="display-3 jumbotron">Welcome</h1>
                     <p>Hello, I am your personal beautification assistant. How can I help you?</p>
                     <p><Link to="/debug" className="btn btn-outline-primary btn-lg">Debug Atom-Beautify</Link></p>
                     <p><Link to="/setup" className="btn btn-outline-primary btn-lg">Setup Beautifiers</Link></p>

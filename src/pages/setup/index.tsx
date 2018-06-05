@@ -29,8 +29,8 @@ export class Setup extends React.Component<SetupProps, SetupState> {
 
     return (
       <div className="container-fluid">
-        <div className="jumbotron">
-          <h1 className="display-3 text-center">Setup</h1>
+        <div>
+          <h1 className="display-3 jumbotron text-center">Setup</h1>
           {support ? <Wizard support={support} /> : <div>Loading...</div>}
         </div>
       </div>
