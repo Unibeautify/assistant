@@ -237,7 +237,8 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     }));
   };
 
-  private setStep = (currentStep: number) => {
+  private setStep = (currentStep: number, e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
     this.setState(prevState => ({
       ...prevState,
       currentStep
@@ -313,7 +314,7 @@ const SideMenuItem: React.StatelessComponent<SideMenuItemProps> = ({
   setStep
 }: SideMenuItemProps) => {
   return (
-    <a onClick={() => setStep(index)} className={`list-group-item list-group-item-action${selected ? " active" : ""}`} href="#">
+    <a onClick={e => setStep(index, e)} className={`list-group-item list-group-item-action${selected ? " active" : ""}`} href="#">
       {index + 1}. {name}
     </a>
   );
@@ -323,7 +324,7 @@ export interface SideMenuItemProps {
   index: number;
   name: string;
   selected: boolean;
-  setStep(currentStep: number): void;
+  setStep(currentStep: number, e: React.MouseEvent<HTMLAnchorElement>): void;
 }
 
 export interface WizardProps {
