@@ -7,14 +7,17 @@ import {
   Option
 } from "unibeautify";
 import * as _ from "lodash";
-import Highlight from "react-highlight";
+import * as CodeMirror from "react-codemirror";
+import * as CopyToClipboard from "react-copy-to-clipboard";
+import Download from '@axetroy/react-download';
 
-import { Card } from "./card";
 import { SelectLanguages } from "./select-languages";
 import { SelectOptions } from "./select-options";
 import { SupportResponse } from "../../ApiClient";
 require("highlight.js/lib/highlight.js");
 require("highlight.js/styles/default.css");
+require("codemirror/lib/codemirror.css");
+require("codemirror/mode/javascript/javascript");
 
 export class Wizard extends React.Component<WizardProps, WizardState> {
   constructor(props: WizardProps) {
@@ -54,18 +57,34 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
       name: "Export configuration",
       render: () => {
         return (
-          <div>
-            <Card
-              header={"JSON"}
-              style={{
-                width: "100%",
-                minHeight: "400px"
+          <div className="exportConfig">
+            <h3 className="inline">JSON</h3>
+            <Download file=".unibeautifyrc.json" content={JSON.stringify(this.state.options, null, 2)}>
+              <button
+                className="btn btn-info"
+                type="submit"
+                >
+                  Download
+              </button>
+            </Download>            
+            <CopyToClipboard text={JSON.stringify(this.state.options, null, 2)}>
+              <button
+                className="btn btn-outline-info"
+                type="submit"
+              >
+                Copy
+              </button>
+            </CopyToClipboard>
+            <CodeMirror
+              value={JSON.stringify(this.state.options, null, 2)}
+              options={{
+                lineNumbers: true,
+                mode: {
+                  name: "javascript",
+                  json: true
+                }
               }}
-            >
-              <Highlight className={"JSON"}>
-                {JSON.stringify(this.state.options, null, 2)}
-              </Highlight>
-            </Card>
+            />
           </div>
         );
       }

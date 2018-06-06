@@ -48,3 +48,11 @@ label {
   min-width: 340px;
   max-width: 340px;
 }
+
+.inline, .react-download-container {
+  display: inline-block;
+}
+
+.exportConfig .btn {
+  margin: 0px 5px 8px 5px;
+}

@@ -4,6 +4,7 @@
   "description": "Personal Beautification Assistant",
   "main": "./docs/bundle.js",
   "dependencies": {
+    "@axetroy/react-download": "^1.1.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "expose-loader": "^0.7.5",
@@ -12,6 +13,8 @@
     "lodash": "^4.17.10",
     "node-static": "^0.7.9",
     "react": "^16.4.0",
+    "react-codemirror": "^1.0.0",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.4.0",
     "react-highlight": "^0.12.0",
     "unibeautify": "^0.15.0"
@@ -20,6 +23,8 @@
     "@types/highlight.js": "^9.12.3",
     "@types/lodash": "^4.14.109",
     "@types/react": "^16.3.16",
+    "@types/react-codemirror": "^1.0.1",
+    "@types/react-copy-to-clipboard": "^4.2.5",
     "@types/react-dom": "^16.0.6",
     "@types/react-router-dom": "^4.2.7",
     "@types/react-select": "^1.2.6",
