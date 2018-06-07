@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Language } from "unibeautify";
 
 export class SelectLanguages extends React.Component<SelectLanguagesProps, {}> {
   public render() {

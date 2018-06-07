@@ -2,13 +2,13 @@ import * as React from "react";
 import { OptionButton } from "./option-button";
 import { Option } from "unibeautify";
 
-export class SelectOptions extends React.Component<SelectOptionsProps, {}> {
+export class SelectLanguageOption extends React.Component<
+  SelectLanguageOptionProps,
+  {}
+> {
   public render() {
     return (
       <div>
-        <div>
-          <strong>Type:</strong> {this.type}
-        </div>
         <div>
           <strong>Value:</strong> {JSON.stringify(this.props.value)}
         </div>
@@ -53,15 +53,6 @@ export class SelectOptions extends React.Component<SelectOptionsProps, {}> {
     );
   }
 
-  private get type(): string {
-    if (this.option.type === "array") {
-      if (this.option.items && this.option.items.type) {
-        return `${this.option.type} of ${this.option.items.type}s`;
-      }
-    }
-    return this.option.type;
-  }
-
   private get exampleValues(): any[] {
     const { option } = this;
     if (option.enum) {
@@ -88,7 +79,7 @@ export class SelectOptions extends React.Component<SelectOptionsProps, {}> {
   }
 }
 
-export interface SelectOptionsProps {
+export interface SelectLanguageOptionProps {
   optionKey: string;
   option: Option;
   languageName: string;

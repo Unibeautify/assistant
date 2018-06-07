@@ -31,7 +31,7 @@ export class OptionButton extends React.Component<OptionButtonProps, {}> {
 
 export interface OptionButtonProps {
   selected: boolean;
-  name: string;
+  name?: string;
   language: string;
   code: string;
   setValue(newValue: any): void;

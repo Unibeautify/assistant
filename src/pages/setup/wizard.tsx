@@ -1,6 +1,5 @@
 import * as React from "react";
 import {
-  Language,
   LanguageOptionValues,
   OptionValues,
   OptionsRegistry,
@@ -9,11 +8,11 @@ import {
 import * as _ from "lodash";
 import * as CodeMirror from "react-codemirror";
 import * as CopyToClipboard from "react-copy-to-clipboard";
-import Download from '@axetroy/react-download';
+import Download from "@axetroy/react-download";
 
 import { SelectLanguages } from "./select-languages";
-import { SelectOptions } from "./select-options";
-import { SupportResponse } from "../../ApiClient";
+import { SelectOption } from "./select-option";
+import { SupportResponse, LanguageWithOptions } from "../../ApiClient";
 require("highlight.js/lib/highlight.js");
 require("highlight.js/styles/default.css");
 require("codemirror/lib/codemirror.css");
@@ -30,7 +29,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
   }
 
   private get steps(): Step[] {
-    const steps = [this.chooseLanguageStep, ...this.languageSteps];
+    const steps = [this.chooseLanguageStep, ...this.optionSteps];
     if (this.selectedLanguageNames.length > 0) {
       steps.push(this.exportConfigStep);
     }
@@ -59,19 +58,16 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
         return (
           <div className="exportConfig">
             <h3 className="inline">JSON</h3>
-            <Download file=".unibeautifyrc.json" content={JSON.stringify(this.state.options, null, 2)}>
-              <button
-                className="btn btn-info"
-                type="submit"
-                >
-                  Download
+            <Download
+              file=".unibeautifyrc.json"
+              content={JSON.stringify(this.state.options, null, 2)}
+            >
+              <button className="btn btn-info" type="submit">
+                Download
               </button>
-            </Download>            
+            </Download>
             <CopyToClipboard text={JSON.stringify(this.state.options, null, 2)}>
-              <button
-                className="btn btn-outline-info"
-                type="submit"
-              >
+              <button className="btn btn-outline-info" type="submit">
                 Copy
               </button>
             </CopyToClipboard>
@@ -91,37 +87,71 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     };
   }
 
-  private get languageSteps(): Step[] {
-    return this.selectedLanguageNames.reduce(
-      (steps, languageName) => {
-        return [...steps, ...this.stepsForLanguage(languageName)];
-      },
-      [] as Step[]
+  private get optionSteps(): Step[] {
+    return (
+      _
+        .chain(this.selectedLanguageOptions)
+        .toPairs()
+        .map(([optionKey, option]) => ({
+          optionKey,
+          option,
+          languages: this.languagesForOptionKey(optionKey)
+        }))
+        .orderBy(["languages.length", "optionKey"], ["desc", "asc"])
+        // .reverse()
+        .reduce(
+          (steps, item) => {
+            return [...steps, this.stepForOption(item)];
+          },
+          [] as Step[]
+        )
+        .value()
     );
   }
 
-  private stepsForLanguage(languageName: string) {
-    const options = this.optionsForLanguage(languageName);
-    return Object.keys(options).map(optionKey => {
-      const option = options[optionKey];
-      const optionName: string = this.optionName(optionKey, option);
-      return {
-        name: `${languageName}: ${optionName}`,
-        render: () => {
-          return (
-            <div>
-              <SelectOptions
-                optionKey={optionKey}
-                option={option}
-                languageName={languageName}
-                value={this.valueForLanguageOption(languageName, optionKey)}
-                setValue={this.setValue}
-              />
-            </div>
-          );
-        }
-      };
-    });
+  private get selectedLanguageOptions(): OptionsRegistry {
+    return this.selectedLanguages.reduce(
+      (options, lang) => ({
+        ...options,
+        ...lang.options
+      }),
+      {}
+    );
+  }
+
+  private stepForOption({
+    optionKey,
+    option,
+    languages
+  }: {
+    optionKey: string;
+    option: Option;
+    languages: LanguageWithOptions[];
+  }) {
+    const optionName: string = this.optionName(optionKey, option);
+    const languageNames: string[] = languages.map(({ name }) => name);
+    return {
+      name: `${optionName} (${languages.length} languages)`,
+      render: () => {
+        return (
+          <div>
+            <SelectOption
+              optionKey={optionKey}
+              option={option}
+              languageNames={languageNames}
+              options={this.state.options}
+              setValue={this.setValue}
+            />
+          </div>
+        );
+      }
+    };
+  }
+
+  private languagesForOptionKey(optionKey: string) {
+    return this.selectedLanguages.filter(
+      lang => this.optionsForLanguage(lang.name)[optionKey]
+    );
   }
 
   private setValue = ({
@@ -143,12 +173,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
         }
       }
     }));
-    this.next();
   };
-
-  private valueForLanguageOption(languageName: string, optionKey: string): any {
-    return _.get(this.state.options, [languageName, optionKey]);
-  }
 
   private optionName(optionKey: string, option: Option): string {
     let title: string = option.title || "";
@@ -200,7 +225,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
       ...prevState,
       options: {
         ...prevState.options,
-        [languageName]: options
+        [languageName]: options as OptionValues
       }
     }));
   }
@@ -209,12 +234,20 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     return this.allLanguageNames.filter(this.isLanguageEnabled);
   }
 
+  private get selectedLanguages() {
+    return this.allLanguages.filter(({ name }) => this.isLanguageEnabled(name));
+  }
+
   private isLanguageEnabled = (languageName: string): boolean => {
     return Boolean(this.state.options[languageName]);
   };
 
   private get allLanguageNames(): string[] {
-    return this.props.support.languages.map(({ name }) => name);
+    return this.allLanguages.map(({ name }) => name);
+  }
+
+  private get allLanguages() {
+    return this.props.support.languages;
   }
 
   private get step(): Step {
@@ -256,7 +289,10 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     }));
   };
 
-  private setStep = (currentStep: number, e: React.MouseEvent<HTMLAnchorElement>) => {
+  private setStep = (
+    currentStep: number,
+    e: React.MouseEvent<HTMLAnchorElement>
+  ) => {
     e.preventDefault();
     this.setState(prevState => ({
       ...prevState,
@@ -319,7 +355,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
 const SideMenu: React.StatelessComponent<SideMenuProps> = ({
   children
 }: SideMenuProps) => {
-  return <div className="list-group">{children}</div>;
+  return <div className="side-menu list-group">{children}</div>;
 };
 
 export interface SideMenuProps {
@@ -333,7 +369,13 @@ const SideMenuItem: React.StatelessComponent<SideMenuItemProps> = ({
   setStep
 }: SideMenuItemProps) => {
   return (
-    <a onClick={e => setStep(index, e)} className={`list-group-item list-group-item-action${selected ? " active" : ""}`} href="#">
+    <a
+      onClick={e => setStep(index, e)}
+      className={`list-group-item list-group-item-action${
+        selected ? " active" : ""
+      }`}
+      href="#"
+    >
       {index + 1}. {name}
     </a>
   );

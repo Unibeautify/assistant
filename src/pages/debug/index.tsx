@@ -1,11 +1,10 @@
 import * as React from "react";
 import { DebugReportInput, DebugReportSummary } from "./components";
 import { DebugReport } from "./models";
-const { default: TimeAgo } = require('react-timeago') as any;
 
-export class Debug extends React.Component<any, DebugState> {
+export class Debug extends React.Component<DebugProps, DebugState> {
 
-    constructor(props: any) {
+    constructor(props: DebugProps) {
         super(props);
         this.state = {
             report: undefined
@@ -37,5 +36,5 @@ export interface DebugProps {
 }
 
 export interface DebugState {
-    report: DebugReport;
+    report?: DebugReport;
 }

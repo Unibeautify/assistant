@@ -1,6 +1,6 @@
 import * as React from "react";
-import { DebugReportInput, DiagnoseBeautifyError } from "./";
-import { DebugReport, BeautifyError, BeautifyErrorType } from "../models";
+import { DiagnoseBeautifyError } from "./";
+import { DebugReport } from "../models";
 const { default: TimeAgo } = require('react-timeago') as any;
 
 export class DebugReportSummary extends React.Component<any, DebugState> {
@@ -43,14 +43,14 @@ export class DebugReportSummary extends React.Component<any, DebugState> {
         }
     }
 
-    private renderError(error: BeautifyError) {
-        switch (error.type) {
-            case BeautifyErrorType.InvalidExecutableVersion:
-                return (<div>Invalid version!</div>)
-            default:
-                return (<div>Unknown error!!!</div>)
-        }
-    }
+    // private renderError(error: BeautifyError) {
+    //     switch (error.type) {
+    //         case BeautifyErrorType.InvalidExecutableVersion:
+    //             return (<div>Invalid version!</div>)
+    //         default:
+    //             return (<div>Unknown error!!!</div>)
+    //     }
+    // }
 
 }
 
