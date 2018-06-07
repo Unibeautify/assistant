@@ -74,6 +74,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
             <CodeMirror
               value={JSON.stringify(this.state.options, null, 2)}
               options={{
+                readOnly: true,
                 lineNumbers: true,
                 mode: {
                   name: "javascript",
