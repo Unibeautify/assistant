@@ -4,6 +4,7 @@ import { Card } from "./card";
 
 export class OptionButton extends React.Component<OptionButtonProps, {}> {
   public render() {
+    const { code } = this.props;
     return (
       <Card
         header={this.header}
@@ -12,7 +13,13 @@ export class OptionButton extends React.Component<OptionButtonProps, {}> {
         } mb-3`}
         onClick={this.onClick}
       >
-        <Highlight className={this.props.language}>{this.props.code}</Highlight>
+        {code ? (
+          <Highlight className={this.props.language}>
+            {this.props.code}
+          </Highlight>
+        ) : (
+          undefined
+        )}
       </Card>
     );
   }
@@ -33,6 +40,6 @@ export interface OptionButtonProps {
   selected: boolean;
   name?: string;
   language: string;
-  code: string;
+  code?: string;
   setValue(newValue: any): void;
 }

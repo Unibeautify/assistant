@@ -1,16 +1,29 @@
 import * as React from "react";
-import { OptionButton } from "./option-button";
 import { Option } from "unibeautify";
+
+import { OptionButton } from "./option-button";
+import { sample } from "../../UglySamples";
 
 export class SelectLanguageOption extends React.Component<
   SelectLanguageOptionProps,
   {}
 > {
+  private readonly languageEditURL: string =
+    "https://github.com/unibeautify/ugly-samples/edit/master";
+
   public render() {
+    const { code } = this;
     return (
       <div>
         <div>
           <strong>Value:</strong> {JSON.stringify(this.props.value)}
+          <a
+            href={code ? this.editExampleButtonUrl : this.addExampleButtonUrl}
+            target="blank"
+            className="btn btn-info float-right"
+          >
+            {code ? "Edit" : "Add"} {this.props.languageName} Example
+          </a>
         </div>
         <br />
         <div className="text-left">
@@ -19,7 +32,7 @@ export class SelectLanguageOption extends React.Component<
             name={undefined}
             selected={this.isSelected(undefined)}
             language={this.props.languageName}
-            code={`if (true) {\n  return true;\n} else {\n  return false;\n}`}
+            code={code}
             setValue={this.setValue}
           />
           {this.exampleValues.map(value => (
@@ -28,13 +41,33 @@ export class SelectLanguageOption extends React.Component<
               name={value}
               selected={this.isSelected(value)}
               language={this.props.languageName}
-              code={`if (true) {\n  return true;\n} else {\n  return false;\n}`}
+              code={code}
               setValue={this.setValue}
             />
           ))}
         </div>
       </div>
     );
+  }
+
+  private get editExampleButtonUrl(): string {
+    return `${this.languageEditURL}/samples/${this.props.languageName}/${
+      this.props.optionKey
+    }.txt`;
+  }
+
+  private get addExampleButtonUrl(): string {
+    return `${this.languageEditURL.replace(
+      "/edit/",
+      "/new/"
+    )}/samples/${encodeURIComponent(this.props.languageName)}/new?filename=${
+      this.props.optionKey
+    }.txt&value=Type%20Example%20Here`;
+  }
+
+  private get code(): string | undefined {
+    const { languageName, optionKey } = this.props;
+    return sample(languageName, optionKey);
   }
 
   private setValue = (newValue: any): void => {

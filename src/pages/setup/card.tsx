@@ -10,9 +10,11 @@ export const Card: React.StatelessComponent<CardProps> = ({
   return (
     <div onClick={onClick} className={`card ${className}`} style={style}>
       <h4 className="card-header">{header}</h4>
-      <div className="card-body">
-        <div className="card-text">{children}</div>
-      </div>
+      {children && (
+        <div className="card-body">
+          <div className="card-text">{children}</div>
+        </div>
+      )}
     </div>
   );
 };
