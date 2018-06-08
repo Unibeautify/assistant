@@ -204,7 +204,7 @@ export class DebugReport {
       output: this.output,
       logs: this.logs,
       hasError: this.hasError,
-      error: this.error
+      error: this.error,
     };
   }
 }
@@ -212,5 +212,5 @@ export class DebugReport {
 export enum OperatingSystem {
   Mac,
   Windows,
-  Linux
+  Linux,
 }

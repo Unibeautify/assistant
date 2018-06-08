@@ -9,7 +9,7 @@ export function trackEvent(event: {
   gtag("event", event.action, {
     event_category: event.category,
     event_label: event.label,
-    value: event.value
+    value: event.value,
   });
 }
 
@@ -26,7 +26,7 @@ export function trackPromise(event: {
         const diff = after - before;
         trackTimingComplete({
           ...event,
-          value: diff
+          value: diff,
         });
         return results;
       })
@@ -47,13 +47,13 @@ export function trackTimingComplete(event: {
     name: event.name,
     value: event.value,
     event_category: event.category,
-    event_label: event.label
+    event_label: event.label,
   });
 }
 
 export function trackError({
   error,
-  fatal = false
+  fatal = false,
 }: {
   error: Error;
   fatal?: boolean;
@@ -61,7 +61,7 @@ export function trackError({
   const description = error.message;
   gtag("event", "exception", {
     description,
-    fatal
+    fatal,
   });
 }
 
