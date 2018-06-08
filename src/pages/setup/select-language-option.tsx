@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Option } from "unibeautify";
+import { Option, LanguageOptionValues } from "unibeautify";
 
 import { OptionButton } from "./option-button";
 import { sample } from "../../UglySamples";
@@ -29,21 +29,25 @@ export class SelectLanguageOption extends React.Component<
         <div className="text-left">
           <OptionButton
             key={"undefined"}
+            optionKey={this.props.optionKey}
             name={undefined}
             selected={this.isSelected(undefined)}
             language={this.props.languageName}
             code={code}
             setValue={this.setValue}
+            options={this.props.options}
           />
           {this.exampleValues.map(value => (
             <OptionButton
               key={value}
+              optionKey={this.props.optionKey}
               name={value}
               selected={this.isSelected(value)}
               language={this.props.languageName}
               code={code}
               setValue={this.setValue}
-            />
+              options={this.props.options}
+              />
           ))}
         </div>
       </div>
@@ -117,5 +121,6 @@ export interface SelectLanguageOptionProps {
   option: Option;
   languageName: string;
   value: any;
+  options: LanguageOptionValues;
   setValue(options: { value: any; language: string; optionKey: string }): void;
 }

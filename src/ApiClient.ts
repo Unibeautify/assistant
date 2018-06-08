@@ -1,9 +1,13 @@
 import { BeautifyData, Language, OptionsRegistry } from "unibeautify";
 import { get } from "lodash";
+import * as React from "react";
 
 import { trackEvent, trackPromise } from "./GoogleAnalytics";
 
-export default class ApiClient {
+export const apiUrl: string =
+  "https://ntd6xp2n56.execute-api.us-east-1.amazonaws.com/dev/playground";
+
+export class ApiClient {
   constructor(private apiUrl: string) {}
 
   public beautify(payload: BeautifyData): Promise<BeautifyResponse> {
@@ -58,3 +62,9 @@ export interface LanguageWithOptions extends Language {
   options: OptionsRegistry;
   beautifiers: string[];
 }
+export default ApiClient;
+
+const { Provider, Consumer } = React.createContext<ApiClient>(
+  new ApiClient(apiUrl)
+);
+export { Provider as ApiClientProvider, Consumer as ApiClientConsumer };

@@ -1,10 +1,13 @@
 import * as React from "react";
 import Highlight from "react-highlight";
 import { Card } from "./card";
+import { LanguageOptionValues } from "unibeautify";
+import { ApiClientConsumer } from "../../ApiClient";
+import { BeautifyConsumer } from "./beautify-consumer";
 
 export class OptionButton extends React.Component<OptionButtonProps, {}> {
   public render() {
-    const { code } = this.props;
+    const { code, name } = this.props;
     return (
       <Card
         header={this.header}
@@ -14,14 +17,50 @@ export class OptionButton extends React.Component<OptionButtonProps, {}> {
         onClick={this.onClick}
       >
         {code ? (
-          <Highlight className={this.props.language}>
-            {this.props.code}
-          </Highlight>
+          name === undefined ? (
+            <Highlight className={this.props.language}>
+              {this.props.code}
+            </Highlight>
+          ) : (
+            <div>
+              <ApiClientConsumer>
+                {client => (
+                  <BeautifyConsumer
+                    client={client}
+                    data={{
+                      languageName: this.props.language,
+                      text: code,
+                      options: this.options
+                    }}
+                  >
+                    {beautified => (
+                      <div>
+                        <Highlight className={this.props.language}>
+                          {beautified && beautified.beautifiedText}
+                        </Highlight>
+                      </div>
+                    )}
+                  </BeautifyConsumer>
+                )}
+              </ApiClientConsumer>
+            </div>
+          )
         ) : (
           undefined
         )}
       </Card>
     );
+  }
+
+  private get options(): LanguageOptionValues {
+    const { options, language, name, optionKey } = this.props;
+    return {
+      ...options,
+      [language]: {
+        ...options[language],
+        [optionKey]: name
+      }
+    };
   }
 
   private get header(): string {
@@ -38,8 +77,10 @@ export class OptionButton extends React.Component<OptionButtonProps, {}> {
 
 export interface OptionButtonProps {
   selected: boolean;
+  optionKey: string;
   name?: string;
   language: string;
   code?: string;
+  options: LanguageOptionValues;
   setValue(newValue: any): void;
 }

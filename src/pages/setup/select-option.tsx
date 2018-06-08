@@ -25,6 +25,7 @@ export class SelectOption extends React.Component<SelectOptionProps, {}> {
               languageName={languageName}
               value={this.valueForLanguageOption(languageName, optionKey)}
               setValue={setValue}
+              options={this.props.options}
             />
           </div>
         ))}

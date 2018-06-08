@@ -1,37 +1,24 @@
 import * as React from "react";
 
-import ApiClient, { SupportResponse } from "../../ApiClient";
+import { ApiClientConsumer } from "../../ApiClient";
 import { Wizard } from "./wizard";
-
-const apiUrl: string =
-  "https://ntd6xp2n56.execute-api.us-east-1.amazonaws.com/dev/playground";
+import { SupportConsumer } from "./support-consumer";
 
 export class Setup extends React.Component<SetupProps, SetupState> {
-  private readonly client: ApiClient;
-
-  constructor(props: SetupProps) {
-    super(props);
-    this.client = new ApiClient(apiUrl);
-    this.state = {};
-  }
-
-  public componentWillMount() {
-    this.client.support().then(support => {
-      this.setState((prevState = {}) => ({
-        ...prevState,
-        support
-      }));
-    });
-  }
-
   public render() {
-    const { support } = this.state;
-
     return (
       <div className="container-fluid">
         <div>
           <h1 className="display-3 jumbotron text-center">Setup</h1>
-          {support ? <Wizard support={support} /> : <div>Loading...</div>}
+          <ApiClientConsumer>
+            {client => (
+              <SupportConsumer client={client}>
+                {support =>
+                  support ? <Wizard support={support} /> : <div>Loading...</div>
+                }
+              </SupportConsumer>
+            )}
+          </ApiClientConsumer>
         </div>
       </div>
     );
@@ -40,6 +27,4 @@ export class Setup extends React.Component<SetupProps, SetupState> {
 
 export interface SetupProps {}
 
-export interface SetupState {
-  support?: SupportResponse;
-}
+export interface SetupState {}
