@@ -8,7 +8,8 @@ export class SelectLanguageOption extends React.Component<
   SelectLanguageOptionProps,
   {}
 > {
-  private readonly languageEditURL: string = "https://github.com/unibeautify/ugly-samples/edit/master";
+  private readonly languageEditURL: string =
+    "https://github.com/unibeautify/ugly-samples/edit/master";
 
   public render() {
     const { code } = this;
@@ -26,8 +27,18 @@ export class SelectLanguageOption extends React.Component<
         </div>
         <br />
         <div className="text-left">
+          {code && (
+            <OptionButton
+              key={"original"}
+              optionKey={this.props.optionKey}
+              name={undefined}
+              selected={false}
+              language={this.props.languageName}
+              code={code}
+            />
+          )}
           <OptionButton
-            key={"undefined"}
+            key={"default"}
             optionKey={this.props.optionKey}
             name={undefined}
             selected={this.isSelected(undefined)}
@@ -77,7 +88,7 @@ export class SelectLanguageOption extends React.Component<
     this.props.setValue({
       language: this.props.languageName,
       optionKey: this.props.optionKey,
-      value: newValue,
+      value: newValue
     });
   };
 

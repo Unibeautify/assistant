@@ -7,7 +7,7 @@ import { BeautifyConsumer } from "./beautify-consumer";
 
 export class OptionButton extends React.Component<OptionButtonProps, {}> {
   public render() {
-    const { code, name } = this.props;
+    const { code } = this.props;
     return (
       <Card
         header={this.header}
@@ -17,11 +17,7 @@ export class OptionButton extends React.Component<OptionButtonProps, {}> {
         onClick={this.onClick}
       >
         {code ? (
-          name === undefined ? (
-            <Highlight className={this.props.language}>
-              {this.props.code}
-            </Highlight>
-          ) : (
+          this.props.options ? (
             <div>
               <ApiClientConsumer>
                 {client => (
@@ -30,7 +26,7 @@ export class OptionButton extends React.Component<OptionButtonProps, {}> {
                     data={{
                       languageName: this.props.language,
                       text: code,
-                      options: this.options,
+                      options: this.options
                     }}
                   >
                     {beautified => (
@@ -44,6 +40,8 @@ export class OptionButton extends React.Component<OptionButtonProps, {}> {
                 )}
               </ApiClientConsumer>
             </div>
+          ) : (
+            <Highlight className={this.props.language}>{code}</Highlight>
           )
         ) : (
           undefined
@@ -53,25 +51,25 @@ export class OptionButton extends React.Component<OptionButtonProps, {}> {
   }
 
   private get options(): LanguageOptionValues {
-    const { options, language, name, optionKey } = this.props;
+    const { options = {}, language, name, optionKey } = this.props;
     return {
       ...options,
       [language]: {
-        ...options[language],
-        [optionKey]: name,
-      },
+        ...(options[language] || {}),
+        [optionKey]: name
+      }
     };
   }
 
   private get header(): string {
     if (this.props.name === undefined) {
-      return "I don't care";
+      return this.props.options ? "Default" : "Original";
     }
     return JSON.stringify(this.props.name);
   }
 
   private onClick = () => {
-    this.props.setValue(this.props.name);
+    this.props.setValue && this.props.setValue(this.props.name);
   };
 }
 
@@ -81,6 +79,6 @@ export interface OptionButtonProps {
   name?: string;
   language: string;
   code?: string;
-  options: LanguageOptionValues;
-  setValue(newValue: any): void;
+  options?: LanguageOptionValues;
+  setValue?(newValue: any): void;
 }
