@@ -2,7 +2,10 @@ import * as React from "react";
 
 import { ApiClient, SupportResponse } from "../../ApiClient";
 
-export class SupportConsumer extends React.Component<SupportProps, SupportState> {
+export class SupportConsumer extends React.Component<
+  SupportProps,
+  SupportState
+> {
   constructor(props: SupportProps) {
     super(props);
     this.state = {};
@@ -12,7 +15,7 @@ export class SupportConsumer extends React.Component<SupportProps, SupportState>
     this.props.client.support().then(support => {
       this.setState((prevState = {}) => ({
         ...prevState,
-        support
+        support,
       }));
     });
   }

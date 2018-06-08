@@ -8,8 +8,7 @@ export class SelectLanguageOption extends React.Component<
   SelectLanguageOptionProps,
   {}
 > {
-  private readonly languageEditURL: string =
-    "https://github.com/unibeautify/ugly-samples/edit/master";
+  private readonly languageEditURL: string = "https://github.com/unibeautify/ugly-samples/edit/master";
 
   public render() {
     const { code } = this;
@@ -47,7 +46,7 @@ export class SelectLanguageOption extends React.Component<
               code={code}
               setValue={this.setValue}
               options={this.props.options}
-              />
+            />
           ))}
         </div>
       </div>
@@ -78,7 +77,7 @@ export class SelectLanguageOption extends React.Component<
     this.props.setValue({
       language: this.props.languageName,
       optionKey: this.props.optionKey,
-      value: newValue
+      value: newValue,
     });
   };
 

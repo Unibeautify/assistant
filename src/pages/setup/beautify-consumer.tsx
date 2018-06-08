@@ -23,7 +23,7 @@ export class BeautifyConsumer extends React.Component<
     this.props.client.beautify(data).then(beautified => {
       this.setState((prevState = {}) => ({
         ...prevState,
-        beautified
+        beautified,
       }));
     });
   }

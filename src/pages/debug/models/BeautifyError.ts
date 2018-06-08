@@ -1,15 +1,14 @@
-
 export abstract class BeautifyError {
-    type: BeautifyErrorType;
+  type: BeautifyErrorType;
 }
 
 export enum BeautifyErrorType {
-    InvalidExecutableVersion
+  InvalidExecutableVersion,
 }
 
 export class InvalidExecutableVersionError extends BeautifyError {
-    type = BeautifyErrorType.InvalidExecutableVersion;
-    constructor(readonly executable: string, readonly version: string) {
-        super();
-    }
+  type = BeautifyErrorType.InvalidExecutableVersion;
+  constructor(readonly executable: string, readonly version: string) {
+    super();
+  }
 }
