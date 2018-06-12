@@ -3,6 +3,7 @@ import { Option, LanguageOptionValues } from "unibeautify";
 
 import { OptionButton } from "./option-button";
 import { InputField } from "./input-field";
+import { MultiSelect } from "./input-multiselect";
 import { sample } from "../../UglySamples";
 
 require("highlight.js/lib/highlight.js");
@@ -19,6 +20,8 @@ export class SelectLanguageOption extends React.Component<
     const { option } = this;
     if (option.type === "integer") {
       return this.numericInput;
+    } else if (option.type === "array") {
+      return this.checkboxInput;
     } else {
       return this.optionButtons;
     }
@@ -146,20 +149,33 @@ export class SelectLanguageOption extends React.Component<
     );
   }
 
+  private get checkboxInput(): any {
+    const { code, option } = this;
+    return (
+      <div>
+        <h2 className="inline">{this.props.languageName}</h2>
+        {this.editButton()}
+        <MultiSelect
+          allValues={option.default}
+          optionKey={this.props.optionKey}
+          language={this.props.languageName}
+          code={code}
+          setValue={this.setValue}
+          options={this.props.options}
+        />
+      </div>
+    );
+  }
+
   private get exampleValues(): any[] {
     const { option } = this;
     if (option.enum) {
       return option.enum;
     }
-    switch (option.type) {
-      case "boolean":
-        return [true, false];
-      case "array": {
-        return [[], option.default];
-      }
-      default:
-        return [option.default];
+    if (option.type === "boolean") {
+      return [true, false];
     }
+    return [option.default];
   }
 
   private get option() {
