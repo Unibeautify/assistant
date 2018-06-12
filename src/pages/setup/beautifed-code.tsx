@@ -5,7 +5,7 @@ import { ApiClientConsumer } from "../../ApiClient";
 
 export const BeautifiedCode: React.StatelessComponent<BeautifiedTextProps> = ({
   children,
-  data
+  data,
 }: BeautifiedTextProps) => {
   return (
     <ApiClientConsumer>
