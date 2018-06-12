@@ -10,7 +10,7 @@ export class BeautifyConsumer extends React.Component<
   constructor(props: BeautifyProps) {
     super(props);
     this.state = {
-      sentDate: new Date()
+      sentDate: new Date(),
     };
   }
 
@@ -28,7 +28,7 @@ export class BeautifyConsumer extends React.Component<
         this.setState(prevState => ({
           ...prevState,
           sentDate,
-          beautified
+          beautified,
         }));
       }
     });

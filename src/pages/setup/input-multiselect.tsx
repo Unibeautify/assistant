@@ -14,7 +14,7 @@ export class MultiSelect extends React.Component<MultiSelectProps, {}> {
           multiple={true}
           className="form-control multiple"
           onChange={this.handleChange}
-          >
+        >
           {this.props.allValues.map(value => (
             <option value={value}>{value}</option>
           ))}
@@ -26,7 +26,7 @@ export class MultiSelect extends React.Component<MultiSelectProps, {}> {
                 data={{
                   languageName: this.props.language,
                   text: code,
-                  options: this.options
+                  options: this.options,
                 }}
               >
                 {beautified => (
@@ -50,7 +50,10 @@ export class MultiSelect extends React.Component<MultiSelectProps, {}> {
 
   private handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const target = event.target;
-    const selectedValues = [].map.call(target.selectedOptions, (selection: HTMLOptionElement) => selection.label);
+    const selectedValues = [].map.call(
+      target.selectedOptions,
+      (selection: HTMLOptionElement) => selection.label
+    );
     this.props.setValue && this.props.setValue(selectedValues);
   };
 
@@ -60,8 +63,8 @@ export class MultiSelect extends React.Component<MultiSelectProps, {}> {
       ...options,
       [language]: {
         ...(options[language] || {}),
-        [optionKey]: value
-      }
+        [optionKey]: value,
+      },
     };
   }
 }

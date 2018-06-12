@@ -22,7 +22,7 @@ export class OptionButton extends React.Component<OptionButtonProps, {}> {
                 data={{
                   languageName: this.props.language,
                   text: code,
-                  options: this.options
+                  options: this.options,
                 }}
               >
                 {beautified => (
@@ -50,8 +50,8 @@ export class OptionButton extends React.Component<OptionButtonProps, {}> {
       ...options,
       [language]: {
         ...(options[language] || {}),
-        [optionKey]: value
-      }
+        [optionKey]: value,
+      },
     };
   }
 
