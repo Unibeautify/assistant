@@ -77,6 +77,11 @@ export class SelectLanguageOption extends React.Component<
     );
   }
 
+  private inputValue(): string | number {
+    const { value } = this.props;
+    return value;
+  }
+
   private get optionButtons(): any {
     const { code } = this;
     return (
@@ -127,6 +132,7 @@ export class SelectLanguageOption extends React.Component<
         language={this.props.languageName}
         code={code}
         setValue={this.setValue}
+        value={this.inputValue()}
       />
     );
   }

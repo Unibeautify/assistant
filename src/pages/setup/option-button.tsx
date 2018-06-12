@@ -50,7 +50,7 @@ export class OptionButton extends React.Component<OptionButtonProps, {}> {
     );
   }
 
-  private get options(): LanguageOptionValues {
+  protected get options(): LanguageOptionValues {
     const { options = {}, language, name, optionKey } = this.props;
     return {
       ...options,
@@ -82,4 +82,5 @@ export interface OptionButtonProps {
   options?: LanguageOptionValues;
   setValue?(newValue: any): void;
   option?: Option;
+  value?: string | number;
 }

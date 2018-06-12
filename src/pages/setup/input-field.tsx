@@ -7,7 +7,7 @@ import { Option } from "unibeautify";
 
 export class InputField extends OptionButton {
   public render() {
-    const { option, code } = this.props;
+    const { option, code, value } = this.props;
     if (option === undefined) {
       return <div></div>
     }
@@ -20,7 +20,7 @@ export class InputField extends OptionButton {
           type="number"
           min={option.minimum || 0}
           max={option.maximum || option.default * 2}
-          defaultValue={option.default}
+          defaultValue={value || option.default}
           onChange={this.handleChange.bind(this)}
         />
         {code ? (
@@ -31,7 +31,7 @@ export class InputField extends OptionButton {
               data={{
                 languageName: this.props.language,
                 text: code,
-                options: {}
+                options: this.options
               }}
             >
               {beautified => (
