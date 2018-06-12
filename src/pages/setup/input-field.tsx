@@ -1,50 +1,51 @@
 import * as React from "react";
-import { OptionButton } from "./option-button";
-import { ApiClientConsumer } from "../../ApiClient";
-import { BeautifyConsumer } from "./beautify-consumer";
 import Highlight from "react-highlight";
+
+import { OptionButton } from "./option-button";
+import { BeautifiedCode } from "./beautifed-code";
 
 export class InputField extends OptionButton {
   public render() {
     const { option, code, value } = this.props;
     if (option === undefined) {
-      return <div></div>
+      return <div />;
     }
     return (
       <div>
-        <label className="col-form-label">{option.description}</label>
-        <input
-          className="form-control"
-          key={this.props.optionKey}
-          type="number"
-          min={option.minimum || 0}
-          max={option.maximum || option.default * 2}
-          defaultValue={value || option.default}
-          onChange={this.handleChange}
-        />
+        <div className="input-group mb-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text" id="basic-addon1">
+              Value
+            </span>
+          </div>
+          <input
+            className="form-control"
+            key={this.props.optionKey}
+            type="number"
+            min={option.minimum || 0}
+            max={option.maximum || option.default * 2}
+            defaultValue={value || option.default}
+            onChange={this.handleChange}
+          />
+        </div>
         {code ? (
           this.props.options ? (
             <div>
-              <ApiClientConsumer>
-                {client => (
-                  <BeautifyConsumer
-                    client={client}
-                    data={{
-                      languageName: this.props.language,
-                      text: code,
-                      options: this.options
-                    }}
-                  >
-                    {beautified => (
-                      <div>
-                        <Highlight className={this.props.language}>
-                          {beautified && beautified.beautifiedText}
-                        </Highlight>
-                      </div>
-                    )}
-                  </BeautifyConsumer>
+              <BeautifiedCode
+                data={{
+                  languageName: this.props.language,
+                  text: code,
+                  options: this.options
+                }}
+              >
+                {beautified => (
+                  <div>
+                    <Highlight className={this.props.language}>
+                      {beautified && beautified.beautifiedText}
+                    </Highlight>
+                  </div>
                 )}
-              </ApiClientConsumer>
+              </BeautifiedCode>
             </div>
           ) : (
             <Highlight className={this.props.language}>{code}</Highlight>
@@ -52,12 +53,12 @@ export class InputField extends OptionButton {
         ) : (
           undefined
         )}
-    </div>
+      </div>
     );
   }
 
   private handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value);
     this.props.setValue && this.props.setValue(newValue);
-  }
+  };
 }

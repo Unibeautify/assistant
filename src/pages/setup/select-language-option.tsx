@@ -16,29 +16,12 @@ export class SelectLanguageOption extends React.Component<
     "https://github.com/unibeautify/ugly-samples/edit/master";
 
   public render() {
-    const { code, option } = this;
-    let optionDisplay;
+    const { option } = this;
     if (option.type === "integer") {
-      optionDisplay = this.numericInput;
+      return this.numericInput;
     } else {
-      optionDisplay = this.optionButtons;
+      return this.optionButtons;
     }
-    return (
-      <div>
-        <div>
-          <strong>Value:</strong> {JSON.stringify(this.props.value)}
-          <a
-            href={code ? this.editExampleButtonUrl : this.addExampleButtonUrl}
-            target="blank"
-            className="btn btn-info float-right"
-          >
-            {code ? "Edit" : "Add"} {this.props.languageName} Example
-          </a>
-        </div>
-        <br />
-        {optionDisplay}
-      </div>
-    );
   }
 
   private get editExampleButtonUrl(): string {
@@ -85,56 +68,79 @@ export class SelectLanguageOption extends React.Component<
   private get optionButtons(): any {
     const { code } = this;
     return (
-      <div className="text-left">
-        {code && (
+      <div>
+        <div>
+          <strong>Value:</strong> {JSON.stringify(this.props.value)}
+          {this.editButton()}
+        </div>
+        <br />
+        <div className="text-left">
+          {code && (
+            <OptionButton
+              key={"original"}
+              optionKey={this.props.optionKey}
+              value={undefined}
+              selected={false}
+              language={this.props.languageName}
+              code={code}
+            />
+          )}
           <OptionButton
-            key={"original"}
+            key={"default"}
             optionKey={this.props.optionKey}
             value={undefined}
-            selected={false}
-            language={this.props.languageName}
-            code={code}
-          />
-        )}
-        <OptionButton
-          key={"default"}
-          optionKey={this.props.optionKey}
-          value={undefined}
-          selected={this.isSelected(undefined)}
-          language={this.props.languageName}
-          code={code}
-          setValue={this.setValue}
-          options={this.props.options}
-        />
-        {this.exampleValues.map(value => (
-          <OptionButton
-            key={value}
-            optionKey={this.props.optionKey}
-            value={value}
-            selected={this.isSelected(value)}
+            selected={this.isSelected(undefined)}
             language={this.props.languageName}
             code={code}
             setValue={this.setValue}
             options={this.props.options}
           />
-        ))}
+          {this.exampleValues.map(value => (
+            <OptionButton
+              key={value}
+              optionKey={this.props.optionKey}
+              value={value}
+              selected={this.isSelected(value)}
+              language={this.props.languageName}
+              code={code}
+              setValue={this.setValue}
+              options={this.props.options}
+            />
+          ))}
+        </div>
       </div>
+    );
+  }
+
+  private editButton() {
+    const { code } = this;
+    return (
+      <a
+        href={code ? this.editExampleButtonUrl : this.addExampleButtonUrl}
+        target="blank"
+        className="btn btn-info float-right"
+      >
+        {code ? "Edit" : "Add"} {this.props.languageName} Example
+      </a>
     );
   }
 
   private get numericInput(): any {
     const { option, code } = this;
     return (
-      <InputField
-        option={option}
-        optionKey={this.props.optionKey}
-        selected={this.isSelected(undefined)}
-        language={this.props.languageName}
-        code={code}
-        setValue={this.setValue}
-        value={this.inputValue}
-        options={this.props.options}
-      />
+      <div>
+        {this.editButton()}
+        <InputField
+          option={option}
+          optionKey={this.props.optionKey}
+          selected={this.isSelected(undefined)}
+          language={this.props.languageName}
+          code={code}
+          setValue={this.setValue}
+          value={this.inputValue}
+          options={this.props.options}
+        />
+      </div>
     );
   }
 

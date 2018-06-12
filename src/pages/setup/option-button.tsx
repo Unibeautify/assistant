@@ -2,8 +2,7 @@ import * as React from "react";
 import Highlight from "react-highlight";
 import { Card } from "./card";
 import { LanguageOptionValues, Option } from "unibeautify";
-import { ApiClientConsumer } from "../../ApiClient";
-import { BeautifyConsumer } from "./beautify-consumer";
+import { BeautifiedCode } from "./beautifed-code";
 
 export class OptionButton extends React.Component<OptionButtonProps, {}> {
   public render() {
@@ -19,26 +18,21 @@ export class OptionButton extends React.Component<OptionButtonProps, {}> {
         {code ? (
           this.props.options ? (
             <div>
-              <ApiClientConsumer>
-                {client => (
-                  <BeautifyConsumer
-                    client={client}
-                    data={{
-                      languageName: this.props.language,
-                      text: code,
-                      options: this.options
-                    }}
-                  >
-                    {beautified => (
-                      <div>
-                        <Highlight className={this.props.language}>
-                          {beautified && beautified.beautifiedText}
-                        </Highlight>
-                      </div>
-                    )}
-                  </BeautifyConsumer>
+              <BeautifiedCode
+                data={{
+                  languageName: this.props.language,
+                  text: code,
+                  options: this.options
+                }}
+              >
+                {beautified => (
+                  <div>
+                    <Highlight className={this.props.language}>
+                      {beautified && beautified.beautifiedText}
+                    </Highlight>
+                  </div>
                 )}
-              </ApiClientConsumer>
+              </BeautifiedCode>
             </div>
           ) : (
             <Highlight className={this.props.language}>{code}</Highlight>
