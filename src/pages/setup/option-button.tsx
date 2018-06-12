@@ -1,7 +1,7 @@
 import * as React from "react";
 import Highlight from "react-highlight";
 import { Card } from "./card";
-import { LanguageOptionValues } from "unibeautify";
+import { LanguageOptionValues, Option } from "unibeautify";
 import { ApiClientConsumer } from "../../ApiClient";
 import { BeautifyConsumer } from "./beautify-consumer";
 
@@ -81,4 +81,5 @@ export interface OptionButtonProps {
   code?: string;
   options?: LanguageOptionValues;
   setValue?(newValue: any): void;
+  option?: Option;
 }

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Option, LanguageOptionValues } from "unibeautify";
-import Highlight from "react-highlight";
 
 import { OptionButton } from "./option-button";
+import { InputField } from "./input-field";
 import { sample } from "../../UglySamples";
 
 require("highlight.js/lib/highlight.js");
@@ -120,26 +120,15 @@ export class SelectLanguageOption extends React.Component<
   private get numericInput(): any {
     const { option, code } = this;
     return (
-      <div>
-        <label className="col-form-label">{option.description}</label>
-        <input
-          className="form-control"
-          key={this.props.optionKey}
-          type="number"
-          min={option.minimum || 0}
-          max={option.maximum || option.default * 2}
-          onChange={this.handleChange.bind(this)}
-        />
-        <Highlight className={this.props.languageName}>
-          {code}
-        </Highlight>
-    </div>
+      <InputField
+        option={option}
+        optionKey={this.props.optionKey}
+        selected={this.isSelected(undefined)}
+        language={this.props.languageName}
+        code={code}
+        setValue={this.setValue}
+      />
     );
-  }
-
-  private handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const newValue = parseInt(event.target.value);
-    this.setValue(newValue);
   }
 
   private get exampleValues(): any[] {
