@@ -24,29 +24,35 @@ export class InputField extends OptionButton {
           onChange={this.handleChange.bind(this)}
         />
         {code ? (
-        <ApiClientConsumer>
-          {client => (
-            <BeautifyConsumer
-              client={client}
-              data={{
-                languageName: this.props.language,
-                text: code,
-                options: this.options
-              }}
-            >
-              {beautified => (
-                <div>
-                  <Highlight className={this.props.language}>
-                    {beautified && beautified.beautifiedText}
-                  </Highlight>
-                </div>
-              )}
-            </BeautifyConsumer>
-          )}
-        </ApiClientConsumer>
-      ) : (
-        undefined
-      )}
+          this.props.options ? (
+            <div>
+              <ApiClientConsumer>
+                {client => (
+                  <BeautifyConsumer
+                    client={client}
+                    data={{
+                      languageName: this.props.language,
+                      text: code,
+                      options: this.options
+                    }}
+                  >
+                    {beautified => (
+                      <div>
+                        <Highlight className={this.props.language}>
+                          {beautified && beautified.beautifiedText}
+                        </Highlight>
+                      </div>
+                    )}
+                  </BeautifyConsumer>
+                )}
+              </ApiClientConsumer>
+            </div>
+          ) : (
+            <Highlight className={this.props.language}>{code}</Highlight>
+          )
+        ) : (
+          undefined
+        )}
     </div>
     );
   }
