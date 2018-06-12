@@ -9,10 +9,12 @@ export class BeautifyConsumer extends React.Component<
 > {
   constructor(props: BeautifyProps) {
     super(props);
-    this.state = {};
+    this.state = {
+      sentDate: new Date()
+    };
   }
 
-  public componentWillMount() {
+  public componentDidMount() {
     this.beautify(this.props.data);
   }
   public componentWillReceiveProps(nextProps: BeautifyProps) {
@@ -20,11 +22,15 @@ export class BeautifyConsumer extends React.Component<
   }
 
   private beautify(data: BeautifyData) {
+    const sentDate = new Date();
     this.props.client.beautify(data).then(beautified => {
-      this.setState((prevState = {}) => ({
-        ...prevState,
-        beautified,
-      }));
+      if (this.state.sentDate < sentDate) {
+        this.setState(prevState => ({
+          ...prevState,
+          sentDate,
+          beautified
+        }));
+      }
     });
   }
 
@@ -41,5 +47,6 @@ export interface BeautifyProps {
 }
 
 export interface BeautifyState {
+  sentDate: Date;
   beautified?: BeautifyResponse;
 }

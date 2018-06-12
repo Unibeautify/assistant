@@ -1,9 +1,8 @@
 import * as React from "react";
-import { OptionButton, OptionButtonProps } from "./option-button";
+import { OptionButton } from "./option-button";
 import { ApiClientConsumer } from "../../ApiClient";
 import { BeautifyConsumer } from "./beautify-consumer";
 import Highlight from "react-highlight";
-import { Option } from "unibeautify";
 
 export class InputField extends OptionButton {
   public render() {
@@ -21,7 +20,7 @@ export class InputField extends OptionButton {
           min={option.minimum || 0}
           max={option.maximum || option.default * 2}
           defaultValue={value || option.default}
-          onChange={this.handleChange.bind(this)}
+          onChange={this.handleChange}
         />
         {code ? (
           this.props.options ? (
@@ -57,12 +56,8 @@ export class InputField extends OptionButton {
     );
   }
 
-  private handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  private handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = parseInt(event.target.value);
     this.props.setValue && this.props.setValue(newValue);
   }
-}
-
-export interface InputFieldProps extends OptionButtonProps {
-  option: Option;
 }

@@ -163,6 +163,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     language: string;
     optionKey: string;
   }): void => {
+    console.log("setValue", this.state, value, language, optionKey);
     this.setState(prevState => ({
       ...prevState,
       options: {
@@ -172,7 +173,9 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
           [optionKey]: value,
         },
       },
-    }));
+    }), () => {
+      console.log("finalState", this.state, value, language, optionKey);
+    });
   };
 
   private optionName(optionKey: string, option: Option): string {

@@ -90,7 +90,7 @@ export class SelectLanguageOption extends React.Component<
           <OptionButton
             key={"original"}
             optionKey={this.props.optionKey}
-            name={undefined}
+            value={undefined}
             selected={false}
             language={this.props.languageName}
             code={code}
@@ -99,7 +99,7 @@ export class SelectLanguageOption extends React.Component<
         <OptionButton
           key={"default"}
           optionKey={this.props.optionKey}
-          name={undefined}
+          value={undefined}
           selected={this.isSelected(undefined)}
           language={this.props.languageName}
           code={code}
@@ -110,7 +110,7 @@ export class SelectLanguageOption extends React.Component<
           <OptionButton
             key={value}
             optionKey={this.props.optionKey}
-            name={value}
+            value={value}
             selected={this.isSelected(value)}
             language={this.props.languageName}
             code={code}

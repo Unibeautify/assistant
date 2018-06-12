@@ -51,36 +51,35 @@ export class OptionButton extends React.Component<OptionButtonProps, {}> {
   }
 
   protected get options(): LanguageOptionValues {
-    const { options = {}, language, name, optionKey } = this.props;
+    const { options = {}, language, value, optionKey } = this.props;
     return {
       ...options,
       [language]: {
         ...(options[language] || {}),
-        [optionKey]: name
+        [optionKey]: value
       }
     };
   }
 
   private get header(): string {
-    if (this.props.name === undefined) {
+    if (this.props.value === undefined) {
       return this.props.options ? "Default" : "Original";
     }
-    return JSON.stringify(this.props.name);
+    return JSON.stringify(this.props.value);
   }
 
   private onClick = () => {
-    this.props.setValue && this.props.setValue(this.props.name);
+    this.props.setValue && this.props.setValue(this.props.value);
   };
 }
 
 export interface OptionButtonProps {
   selected: boolean;
   optionKey: string;
-  name?: string;
+  value?: string | number;
   language: string;
   code?: string;
   options?: LanguageOptionValues;
   setValue?(newValue: any): void;
   option?: Option;
-  value?: string | number;
 }
