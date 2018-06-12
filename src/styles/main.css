@@ -32,6 +32,11 @@ label {
   color: #000000;
 }
 
+.card-body {
+  height: 250px;
+  overflow-x: scroll;
+}
+
 .card-body pre {
   min-height: 10rem;
 }
@@ -60,4 +65,8 @@ label {
 .side-menu {
   max-height: 1000px;
   overflow-y: scroll;
+}
+
+.languageOptionGroup:nth-child(2n+1) {
+  margin: 30px 0px;
 }
