@@ -1,8 +1,12 @@
 import * as React from "react";
 import { Option, LanguageOptionValues } from "unibeautify";
+import Highlight from "react-highlight";
 
 import { OptionButton } from "./option-button";
 import { sample } from "../../UglySamples";
+
+require("highlight.js/lib/highlight.js");
+require("highlight.js/styles/default.css");
 
 export class SelectLanguageOption extends React.Component<
   SelectLanguageOptionProps,
@@ -12,7 +16,13 @@ export class SelectLanguageOption extends React.Component<
     "https://github.com/unibeautify/ugly-samples/edit/master";
 
   public render() {
-    const { code } = this;
+    const { code, option } = this;
+    let optionDisplay;
+    if (option.type === "integer") {
+      optionDisplay = this.numericInput;
+    } else {
+      optionDisplay = this.optionButtons;
+    }
     return (
       <div>
         <div>
@@ -26,40 +36,7 @@ export class SelectLanguageOption extends React.Component<
           </a>
         </div>
         <br />
-        <div className="text-left">
-          {code && (
-            <OptionButton
-              key={"original"}
-              optionKey={this.props.optionKey}
-              name={undefined}
-              selected={false}
-              language={this.props.languageName}
-              code={code}
-            />
-          )}
-          <OptionButton
-            key={"default"}
-            optionKey={this.props.optionKey}
-            name={undefined}
-            selected={this.isSelected(undefined)}
-            language={this.props.languageName}
-            code={code}
-            setValue={this.setValue}
-            options={this.props.options}
-          />
-          {this.exampleValues.map(value => (
-            <OptionButton
-              key={value}
-              optionKey={this.props.optionKey}
-              name={value}
-              selected={this.isSelected(value)}
-              language={this.props.languageName}
-              code={code}
-              setValue={this.setValue}
-              options={this.props.options}
-            />
-          ))}
-        </div>
+        {optionDisplay}
       </div>
     );
   }
@@ -100,6 +77,71 @@ export class SelectLanguageOption extends React.Component<
     );
   }
 
+  private get optionButtons(): any {
+    const { code } = this;
+    return (
+      <div className="text-left">
+        {code && (
+          <OptionButton
+            key={"original"}
+            optionKey={this.props.optionKey}
+            name={undefined}
+            selected={false}
+            language={this.props.languageName}
+            code={code}
+          />
+        )}
+        <OptionButton
+          key={"default"}
+          optionKey={this.props.optionKey}
+          name={undefined}
+          selected={this.isSelected(undefined)}
+          language={this.props.languageName}
+          code={code}
+          setValue={this.setValue}
+          options={this.props.options}
+        />
+        {this.exampleValues.map(value => (
+          <OptionButton
+            key={value}
+            optionKey={this.props.optionKey}
+            name={value}
+            selected={this.isSelected(value)}
+            language={this.props.languageName}
+            code={code}
+            setValue={this.setValue}
+            options={this.props.options}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  private get numericInput(): any {
+    const { option, code } = this;
+    return (
+      <div>
+        <label className="col-form-label">{option.description}</label>
+        <input
+          className="form-control"
+          key={this.props.optionKey}
+          type="number"
+          min={option.minimum || 0}
+          max={option.maximum || option.default * 2}
+          onChange={this.handleChange.bind(this)}
+        />
+        <Highlight className={this.props.languageName}>
+          {code}
+        </Highlight>
+    </div>
+    );
+  }
+
+  private handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const newValue = parseInt(event.target.value);
+    this.setValue(newValue);
+  }
+
   private get exampleValues(): any[] {
     const { option } = this;
     if (option.enum) {
@@ -108,11 +150,6 @@ export class SelectLanguageOption extends React.Component<
     switch (option.type) {
       case "boolean":
         return [true, false];
-      case "integer": {
-        const min = option.minimum || 0;
-        const max = option.maximum || option.default * 2;
-        return [option.default, min, max].sort();
-      }
       case "array": {
         return [[], option.default];
       }
