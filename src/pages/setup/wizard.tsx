@@ -3,20 +3,21 @@ import {
   LanguageOptionValues,
   OptionValues,
   OptionsRegistry,
-  Option,
+  Option
 } from "unibeautify";
 import * as _ from "lodash";
 import * as CodeMirror from "react-codemirror";
 import * as CopyToClipboard from "react-copy-to-clipboard";
 import Download from "@axetroy/react-download";
 
-import { SelectLanguages } from "./select-languages";
-import { SelectOption } from "./select-option";
-import { SupportResponse, LanguageWithOptions } from "../../ApiClient";
 require("highlight.js/lib/highlight.js");
 require("highlight.js/styles/default.css");
 require("codemirror/lib/codemirror.css");
 require("codemirror/mode/javascript/javascript");
+import { SelectLanguages } from "./select-languages";
+import { SelectOption } from "./select-option";
+import { SupportResponse, LanguageWithOptions } from "../../ApiClient";
+import { Progress } from "../../Progress";
 
 export class Wizard extends React.Component<WizardProps, WizardState> {
   constructor(props: WizardProps) {
@@ -24,7 +25,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     this.state = {
       languages: [],
       options: {},
-      currentStep: 0,
+      currentStep: 0
     };
   }
 
@@ -47,7 +48,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
             toggleLanguage={this.toggleLanguage}
           />
         );
-      },
+      }
     };
   }
 
@@ -78,24 +79,25 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
                 lineNumbers: true,
                 mode: {
                   name: "javascript",
-                  json: true,
-                },
+                  json: true
+                }
               }}
             />
           </div>
         );
-      },
+      }
     };
   }
 
   private get optionSteps(): Step[] {
     return (
-      _.chain(this.selectedLanguageOptions)
+      _
+        .chain(this.selectedLanguageOptions)
         .toPairs()
         .map(([optionKey, option]) => ({
           optionKey,
           option,
-          languages: this.languagesForOptionKey(optionKey),
+          languages: this.languagesForOptionKey(optionKey)
         }))
         .orderBy(["languages.length", "optionKey"], ["desc", "asc"])
         // .reverse()
@@ -113,7 +115,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     return this.selectedLanguages.reduce(
       (options, lang) => ({
         ...options,
-        ...lang.options,
+        ...lang.options
       }),
       {}
     );
@@ -122,7 +124,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
   private stepForOption({
     optionKey,
     option,
-    languages,
+    languages
   }: {
     optionKey: string;
     option: Option;
@@ -144,7 +146,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
             />
           </div>
         );
-      },
+      }
     };
   }
 
@@ -157,7 +159,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
   private setValue = ({
     value,
     language,
-    optionKey,
+    optionKey
   }: {
     value: any;
     language: string;
@@ -171,9 +173,9 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
           ...prevState.options,
           [language]: {
             ..._.get(prevState.options, language, {}),
-            [optionKey]: value,
-          },
-        },
+            [optionKey]: value
+          }
+        }
       }),
       () => {
         console.log("finalState", this.state, value, language, optionKey);
@@ -219,7 +221,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     const support = this.supportForLanguage(languageName);
     const beautifiers = support ? support.beautifiers : [];
     this.setLanguageOptions(languageName, {
-      beautifiers,
+      beautifiers
     } as any);
   }
 
@@ -231,8 +233,8 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
       ...prevState,
       options: {
         ...prevState.options,
-        [languageName]: options as OptionValues,
-      },
+        [languageName]: options as OptionValues
+      }
     }));
   }
 
@@ -270,28 +272,28 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
   private goToStart = () => {
     this.setState(prevState => ({
       ...prevState,
-      currentStep: 0,
+      currentStep: 0
     }));
   };
 
   private goToEnd = () => {
     this.setState(prevState => ({
       ...prevState,
-      currentStep: this.steps.length - 1,
+      currentStep: this.steps.length - 1
     }));
   };
 
   private next = () => {
     this.setState(prevState => ({
       ...prevState,
-      currentStep: Math.min(this.steps.length - 1, prevState.currentStep + 1),
+      currentStep: Math.min(this.steps.length - 1, prevState.currentStep + 1)
     }));
   };
 
   private prev = () => {
     this.setState(prevState => ({
       ...prevState,
-      currentStep: Math.max(0, prevState.currentStep - 1),
+      currentStep: Math.max(0, prevState.currentStep - 1)
     }));
   };
 
@@ -302,54 +304,64 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     e.preventDefault();
     this.setState(prevState => ({
       ...prevState,
-      currentStep,
+      currentStep
     }));
   };
+
+  private get percentage(): number {
+    if (this.totalSteps === 1) {
+      return 1;
+    }
+    return Math.max(0, ((this.currentStep + 1) / this.totalSteps) * 100);
+  }
 
   public render() {
     const { step, steps, currentStep } = this;
     console.log(this.props.support, step);
     return (
-      <div className="row">
-        <SideMenu>
-          {steps.map((step, index) => (
-            <SideMenuItem
-              key={index}
-              index={index}
-              name={step.name}
-              selected={index === currentStep}
-              setStep={this.setStep}
-            />
-          ))}
-        </SideMenu>
-        <div className="col-sm-9">
-          <h2>{step.name}</h2>
-          <div>
-            <StepView index={currentStep} step={step} />
-          </div>
-          <div className="text-center">
-            {this.currentStep > 0 && (
-              <span>
-                <button className="btn btn-success" onClick={this.goToStart}>
-                  &lt;&lt; Choose Languages
-                </button>
-                <button className="btn btn-primary" onClick={this.prev}>
-                  &lt; Previous
-                </button>
-              </span>
-            )}
-            {this.state.currentStep + 1 < this.totalSteps && (
-              <span>
-                <button className="btn btn-primary" onClick={this.next}>
-                  Next &gt;
-                </button>
-                <button className="btn btn-success" onClick={this.goToEnd}>
-                  Export Config &gt;&gt;
-                </button>
-              </span>
-            )}
+      <div>
+        <Progress percentage={this.percentage} />
+        <div className="row">
+          <SideMenu>
+            {steps.map((step, index) => (
+              <SideMenuItem
+                key={index}
+                index={index}
+                name={step.name}
+                selected={index === currentStep}
+                setStep={this.setStep}
+              />
+            ))}
+          </SideMenu>
+          <div className="col-sm-9">
+            <h2>{step.name}</h2>
             <div>
-              Step {this.currentStep + 1} of {this.totalSteps}
+              <StepView index={currentStep} step={step} />
+            </div>
+            <div className="text-center">
+              {this.currentStep > 0 && (
+                <span>
+                  <button className="btn btn-success" onClick={this.goToStart}>
+                    &lt;&lt; Choose Languages
+                  </button>
+                  <button className="btn btn-primary" onClick={this.prev}>
+                    &lt; Previous
+                  </button>
+                </span>
+              )}
+              {this.state.currentStep + 1 < this.totalSteps && (
+                <span>
+                  <button className="btn btn-primary" onClick={this.next}>
+                    Next &gt;
+                  </button>
+                  <button className="btn btn-success" onClick={this.goToEnd}>
+                    Export Config &gt;&gt;
+                  </button>
+                </span>
+              )}
+              <div>
+                Step {this.currentStep + 1} of {this.totalSteps}
+              </div>
             </div>
           </div>
         </div>
@@ -359,7 +371,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
 }
 
 const SideMenu: React.StatelessComponent<SideMenuProps> = ({
-  children,
+  children
 }: SideMenuProps) => {
   return <div className="side-menu list-group">{children}</div>;
 };
@@ -372,7 +384,7 @@ const SideMenuItem: React.StatelessComponent<SideMenuItemProps> = ({
   index,
   name,
   selected,
-  setStep,
+  setStep
 }: SideMenuItemProps) => {
   return (
     <a
@@ -411,7 +423,7 @@ export interface Step {
 
 const StepView: React.StatelessComponent<StepViewProps> = ({
   index,
-  step,
+  step
 }: StepViewProps) => {
   return step.render({});
 };

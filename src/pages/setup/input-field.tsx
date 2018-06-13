@@ -3,6 +3,7 @@ import Highlight from "react-highlight";
 
 import { OptionButton } from "./option-button";
 import { BeautifiedCode } from "./beautifed-code";
+import { Card } from "./card";
 
 export class InputField extends OptionButton {
   public render() {
@@ -19,12 +20,15 @@ export class InputField extends OptionButton {
             </span>
           </div>
           <input
-            className="form-control"
-            key={this.props.optionKey}
             type="number"
+            className="form-control"
+            placeholder={
+              code ? "Enter number to preview below" : "Enter number"
+            }
+            key={this.props.optionKey}
             min={option.minimum || 0}
             max={option.maximum || option.default * 2}
-            defaultValue={value || option.default}
+            value={value}
             onChange={this.handleChange}
           />
         </div>
@@ -35,14 +39,16 @@ export class InputField extends OptionButton {
                 data={{
                   languageName: this.props.language,
                   text: code,
-                  options: this.options,
+                  options: this.options
                 }}
               >
-                {beautified => (
+                {beautifiedText => (
                   <div>
-                    <Highlight className={this.props.language}>
-                      {beautified && beautified.beautifiedText}
-                    </Highlight>
+                    <Card className="card-fluid" header="Preview">
+                      <Highlight className={this.props.language}>
+                        {beautifiedText}
+                      </Highlight>
+                    </Card>
                   </div>
                 )}
               </BeautifiedCode>

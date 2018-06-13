@@ -5,11 +5,11 @@ export const Card: React.StatelessComponent<CardProps> = ({
   children,
   onClick,
   style,
-  className = "",
+  className = ""
 }: CardProps) => {
   return (
     <div onClick={onClick} className={`card ${className}`} style={style}>
-      <h4 className="card-header">{header}</h4>
+      {header && <h4 className="card-header">{header}</h4>}
       {children && (
         <div className="card-body">
           <div className="card-text">{children}</div>
@@ -20,7 +20,7 @@ export const Card: React.StatelessComponent<CardProps> = ({
 };
 
 export interface CardProps {
-  header: string;
+  header?: string | JSX.Element;
   children?: JSX.Element | JSX.Element[];
   onClick?: (event: any) => void;
   className?: string;

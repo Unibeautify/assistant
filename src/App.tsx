@@ -7,6 +7,7 @@ import { Config, Debug, Setup } from "./pages";
 import { ApiClientProvider, ApiClient, apiUrl } from "./ApiClient";
 require("./styles/bootstraptheme.css");
 require("./styles/main.css");
+require("./styles/spinner.css");
 
 const App = () => (
   <Router>

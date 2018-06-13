@@ -29,10 +29,10 @@ export class MultiSelect extends React.Component<MultiSelectProps, {}> {
                   options: this.options,
                 }}
               >
-                {beautified => (
+                {beautifiedText => (
                   <div>
                     <Highlight className={this.props.language}>
-                      {beautified && beautified.beautifiedText}
+                      {beautifiedText}
                     </Highlight>
                   </div>
                 )}
