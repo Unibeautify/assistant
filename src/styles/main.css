@@ -83,3 +83,11 @@ label {
   height: 1rem;
   margin: 1rem;
 }
+
+.input-group input {
+  height: calc(2.15625rem + 2px);
+}
+
+.input-group button {
+  margin: 0px;
+}

@@ -10,15 +10,22 @@ export class MultiSelect extends React.Component<MultiSelectProps, {}> {
     this.props.allValues.sort();
     return (
       <div>
-        <select
-          multiple={true}
-          className="form-control multiple"
-          onChange={this.handleChange}
-        >
-          {this.props.allValues.map(value => (
-            <option value={value}>{value}</option>
-          ))}
-        </select>
+        {this.props.allValues.map((value) => (
+          <div>
+            <div className="input-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              value={value}
+              onChange={this.handleChangeField}
+            />
+            <div className="input-group-append">
+              <button type="button" className="btn btn-danger" onClick={this.handleRemoveField}>Remove</button>
+            </div>
+          </div>
+        </div>
+        ))}
+        <button type="button" className="btn btn-primary" onClick={this.handleAddField}>Add</button>
         {code ? (
           this.props.options ? (
             <div>
@@ -48,14 +55,17 @@ export class MultiSelect extends React.Component<MultiSelectProps, {}> {
     );
   }
 
-  private handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  private handleChangeField = (event: React.ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
-    const selectedValues = [].map.call(
-      target.selectedOptions,
-      (selection: HTMLOptionElement) => selection.label
-    );
-    this.props.setValue && this.props.setValue(selectedValues);
   };
+
+  private handleAddField = () => {
+
+  }
+
+  private handleRemoveField = () => {
+
+  }
 
   protected get options(): LanguageOptionValues {
     const { options = {}, language, value, optionKey } = this.props;
