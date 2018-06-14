@@ -5,7 +5,7 @@ export const Card: React.StatelessComponent<CardProps> = ({
   children,
   onClick,
   style,
-  className = ""
+  className = "",
 }: CardProps) => {
   return (
     <div onClick={onClick} className={`card ${className}`} style={style}>

@@ -6,7 +6,7 @@ import { Spinner } from "../../Spinner";
 
 export const BeautifiedCode: React.StatelessComponent<BeautifiedTextProps> = ({
   children,
-  data
+  data,
 }: BeautifiedTextProps) => {
   return (
     <ApiClientConsumer>
