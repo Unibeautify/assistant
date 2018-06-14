@@ -73,7 +73,7 @@ export class InputArray extends React.Component<InputArrayProps, {}> {
   ) => {
     const value = event.target.value;
     console.log("handleChangeField", index, value);
-    const prevValue = (this.props.value || []);
+    const prevValue = this.props.value || [];
     const newValue = prevValue.slice();
     newValue[index] = value;
     this.props.setValue && this.props.setValue(newValue);
@@ -89,7 +89,7 @@ export class InputArray extends React.Component<InputArrayProps, {}> {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     console.log("handleRemoveField", index);
-    const prevValue = (this.props.value || []);
+    const prevValue = this.props.value || [];
     const newValue = prevValue.slice();
     newValue.splice(index, 1);
     this.props.setValue && this.props.setValue(newValue);

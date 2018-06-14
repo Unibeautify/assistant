@@ -1,7 +1,7 @@
 import * as React from "react";
 
 export const Progress: React.StatelessComponent<ProgressProps> = ({
-  percentage
+  percentage,
 }: ProgressProps) => {
   const roundedPercentage = parseInt(percentage as any);
   const backgroundColour = backgroundColourForPercentage(roundedPercentage);

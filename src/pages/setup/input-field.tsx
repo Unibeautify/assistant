@@ -39,7 +39,7 @@ export class InputField extends OptionButton {
                 data={{
                   languageName: this.props.language,
                   text: code,
-                  options: this.options
+                  options: this.options,
                 }}
               >
                 {beautifiedText => (
