@@ -44,7 +44,7 @@ export class InputField extends OptionButton {
               >
                 {beautifiedText => (
                   <div>
-                    <Card className="card-fluid" header="Preview">
+                    <Card className="previewCard card-fluid" header="Preview">
                       <Highlight className={this.props.language}>
                         {beautifiedText}
                       </Highlight>
@@ -64,7 +64,11 @@ export class InputField extends OptionButton {
   }
 
   private handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = parseInt(event.target.value);
-    this.props.setValue && this.props.setValue(newValue);
+    const target = event.target;
+    const valid = isNaN(Number(target.value)) ? false : target.checkValidity();
+    if (valid) {
+      const newValue = target.value;
+      this.props.setValue && this.props.setValue(newValue);
+    }
   };
 }

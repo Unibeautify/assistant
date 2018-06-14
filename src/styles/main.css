@@ -27,8 +27,8 @@ label {
   border-color: #3498DB !important;
 }
 
-.card:nth-child(n+2) {
-  margin-left: 20px;
+.card:nth-child(2), .card:nth-child(3n+5) {
+  margin: 0px 20px;
 }
 
 .card-header {
@@ -42,6 +42,7 @@ label {
 }
 
 .card-body pre {
+  height: 10rem;
   margin-bottom: 0px;
 }
 
@@ -90,4 +91,20 @@ label {
 
 .input-group button {
   margin: 0px;
+}
+
+.previewCard {
+  cursor: auto;
+}
+
+.previewCard:hover {
+  border-color: rgba(0, 0, 0, 0.125) !important;
+}
+
+.previewCard .card-body {
+  max-height: none;
+}
+
+.previewCard .card-body pre {
+  height: auto;
 }

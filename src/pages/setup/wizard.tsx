@@ -58,7 +58,6 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
       render: () => {
         return (
           <div className="exportConfig">
-            <h3 className="inline">JSON</h3>
             <Download
               file=".unibeautifyrc.json"
               content={JSON.stringify(this.state.options, null, 2)}
@@ -72,21 +71,33 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
                 Copy
               </button>
             </CopyToClipboard>
+            <ul className="nav nav-tabs">
+              <li className="nav-item">
+                <a className="nav-link active show" onClick={this.handleTabClick} data-toggle="tab" href="#json">JSON</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" data-toggle="tab" onClick={this.handleTabClick} href="#yaml">YAML</a>
+              </li>
+            </ul>
             <CodeMirror
-              value={JSON.stringify(this.state.options, null, 2)}
-              options={{
-                readOnly: true,
-                lineNumbers: true,
-                mode: {
-                  name: "javascript",
-                  json: true,
-                },
-              }}
+                  value={JSON.stringify(this.state.options, null, 2)}
+                  options={{
+                    readOnly: true,
+                    lineNumbers: true,
+                    mode: {
+                      name: "javascript",
+                      json: true,
+                    },
+                  }}
             />
           </div>
         );
       },
     };
+  }
+
+  private handleTabClick(event: React.MouseEvent<HTMLAnchorElement>) {
+    event.preventDefault();
   }
 
   private get optionSteps(): Step[] {

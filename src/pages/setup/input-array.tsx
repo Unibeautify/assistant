@@ -2,6 +2,7 @@ import * as React from "react";
 import Highlight from "react-highlight";
 
 import { BeautifiedCode } from "./beautifed-code";
+import { Card } from "./card";
 import { LanguageOptionValues, Option } from "unibeautify";
 
 export class InputArray extends React.Component<InputArrayProps, {}> {
@@ -51,9 +52,11 @@ export class InputArray extends React.Component<InputArrayProps, {}> {
               >
                 {beautifiedText => (
                   <div>
-                    <Highlight className={this.props.language}>
-                      {beautifiedText}
-                    </Highlight>
+                    <Card className="previewCard card-fluid" header="Preview">
+                      <Highlight className={this.props.language}>
+                        {beautifiedText}
+                      </Highlight>
+                    </Card>
                   </div>
                 )}
               </BeautifiedCode>
