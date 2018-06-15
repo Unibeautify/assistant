@@ -6,16 +6,10 @@ import {
   Option,
 } from "unibeautify";
 import * as _ from "lodash";
-import * as CodeMirror from "react-codemirror";
-import * as CopyToClipboard from "react-copy-to-clipboard";
-import Download from "@axetroy/react-download";
 
-require("highlight.js/lib/highlight.js");
-require("highlight.js/styles/default.css");
-require("codemirror/lib/codemirror.css");
-require("codemirror/mode/javascript/javascript");
 import { SelectLanguages } from "./select-languages";
 import { SelectOption } from "./select-option";
+import { ExportConfig } from "./export-config";
 import { SupportResponse, LanguageWithOptions } from "../../ApiClient";
 import { Progress } from "../../Progress";
 
@@ -57,47 +51,12 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
       name: "Export configuration",
       render: () => {
         return (
-          <div className="exportConfig">
-            <Download
-              file=".unibeautifyrc.json"
-              content={JSON.stringify(this.state.options, null, 2)}
-            >
-              <button className="btn btn-info" type="submit">
-                Download
-              </button>
-            </Download>
-            <CopyToClipboard text={JSON.stringify(this.state.options, null, 2)}>
-              <button className="btn btn-outline-info" type="submit">
-                Copy
-              </button>
-            </CopyToClipboard>
-            <ul className="nav nav-tabs">
-              <li className="nav-item">
-                <a className="nav-link active show" onClick={this.handleTabClick} data-toggle="tab" href="#json">JSON</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" data-toggle="tab" onClick={this.handleTabClick} href="#yaml">YAML</a>
-              </li>
-            </ul>
-            <CodeMirror
-                  value={JSON.stringify(this.state.options, null, 2)}
-                  options={{
-                    readOnly: true,
-                    lineNumbers: true,
-                    mode: {
-                      name: "javascript",
-                      json: true,
-                    },
-                  }}
-            />
-          </div>
+          <ExportConfig
+            options={this.state.options}
+           />
         );
       },
     };
-  }
-
-  private handleTabClick(event: React.MouseEvent<HTMLAnchorElement>) {
-    event.preventDefault();
   }
 
   private get optionSteps(): Step[] {
