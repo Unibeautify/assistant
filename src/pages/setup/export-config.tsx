@@ -14,8 +14,7 @@ export class ExportConfig extends React.Component<ExportConfigProps, ExportConfi
     constructor(props: ExportConfigProps) {
         super(props);
         this.state = {
-          exportLanguage: "json",
-          exportText: JSON.stringify(this.props.options, null, 2)
+          exportLanguage: "json"
         };
 
         this.handleTabClick = this.handleTabClick.bind(this);
@@ -73,15 +72,12 @@ export class ExportConfig extends React.Component<ExportConfigProps, ExportConfi
 
     private handleTabClick(event: React.MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
-        const { options } = this.props;
         const tab = event.target;
         if (tab instanceof Element) {
             let language = tab.getAttribute("href");
-            language = language ? language.slice(1, language.length) : "";
-            const text = language === "json" ? JSON.stringify(options, null, 2) : jsYaml.dump(options);
+            language = language ? language.slice(1, language.length) : "";            
             this.setState({
-                exportLanguage: language,
-                exportText: text
+                exportLanguage: language
             });
         }        
     }    
@@ -93,5 +89,4 @@ export interface ExportConfigProps {
 
 export interface ExportConfigState {
     exportLanguage: string;
-    exportText: string;
 }
