@@ -50,11 +50,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     return {
       name: "Export configuration",
       render: () => {
-        return (
-          <ExportConfig
-            options={this.state.options}
-           />
-        );
+        return <ExportConfig options={this.state.options} />;
       },
     };
   }
