@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as CodeMirror from "react-codemirror";
+import { UnControlled as CodeMirror } from "react-codemirror2";
 import * as CopyToClipboard from "react-copy-to-clipboard";
 import Download from "@axetroy/react-download";
 import * as jsYaml from "js-yaml";
