@@ -98,7 +98,7 @@ export class ExportConfig extends React.Component<
         exportLanguage: language,
       });
     }
-  }
+  };
 }
 
 export interface ExportConfigProps {
