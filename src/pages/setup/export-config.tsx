@@ -18,8 +18,6 @@ export class ExportConfig extends React.Component<
     this.state = {
       exportLanguage: "json",
     };
-
-    this.handleTabClick = this.handleTabClick.bind(this);
   }
 
   public render() {
@@ -90,7 +88,7 @@ export class ExportConfig extends React.Component<
     );
   }
 
-  private handleTabClick(event: React.MouseEvent<HTMLAnchorElement>) {
+  private handleTabClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     const tab = event.target;
     if (tab instanceof Element) {
