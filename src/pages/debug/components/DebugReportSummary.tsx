@@ -1,17 +1,18 @@
 import * as React from "react";
-import { DebugReportInput, DiagnoseBeautifyError } from "./";
-import { DebugReport, BeautifyError, BeautifyErrorType } from "../models";
-const { default: TimeAgo } = require('react-timeago') as any;
+import { DiagnoseBeautifyError } from "./";
+import { DebugReport } from "../models";
+const { default: TimeAgo } = require("react-timeago") as any;
 
 export class DebugReportSummary extends React.Component<any, DebugState> {
-
-    public render() {
-        const { report } = this.props;
-        if (report.isValid) {
-            return (
-                <div>
-                    <p>Thanks! I see this was generated <TimeAgo date={report.date} />.</p>
-                    {/*
+  public render() {
+    const { report } = this.props;
+    if (report.isValid) {
+      return (
+        <div>
+          <p>
+            Thanks! I see this was generated <TimeAgo date={report.date} />.
+          </p>
+          {/*
                     <p>Platform: <span className="badge badge-default">{report.platform}</span>.</p>
                     <p>Atom Version <span className="badge badge-default">{report.atomVersion}</span>.</p>
                     <p>Atom Beautify Version <span className="badge badge-default">{report.atomBeautifyVersion}</span>.</p>
@@ -22,8 +23,8 @@ export class DebugReportSummary extends React.Component<any, DebugState> {
                     <p>Supported Beautifiers <span className="badge badge-default">{report.beautifiers}</span>.</p>
                     <p>Selected Beautifier <span className="badge badge-default">{report.beautifier}</span>.</p>
                     */}
-                    {/*<pre>{JSON.stringify(report, null, 2)}</pre>*/}
-                    {/*{Object.keys(report.toJSON()).map(key => (
+          {/*<pre>{JSON.stringify(report, null, 2)}</pre>*/}
+          {/*{Object.keys(report.toJSON()).map(key => (
                         <div key={key}>
                             <details>
                                 <summary>{key}</summary>
@@ -31,32 +32,30 @@ export class DebugReportSummary extends React.Component<any, DebugState> {
                             </details>
                         </div>
                     ))}*/}
-                    {report.hasError ?
-                        (<DiagnoseBeautifyError error={report.error} />) :
-                        (<div>Looks good to me!</div>)}
-                </div>
-            );
-        } else {
-            return (
-                <div>This doesn't look right. Please try again.</div>
-            );
-        }
+          {report.hasError ? (
+            <DiagnoseBeautifyError error={report.error} />
+          ) : (
+            <div>Looks good to me!</div>
+          )}
+        </div>
+      );
+    } else {
+      return <div>This doesn't look right. Please try again.</div>;
     }
+  }
 
-    private renderError(error: BeautifyError) {
-        switch (error.type) {
-            case BeautifyErrorType.InvalidExecutableVersion:
-                return (<div>Invalid version!</div>)
-            default:
-                return (<div>Unknown error!!!</div>)
-        }
-    }
-
+  // private renderError(error: BeautifyError) {
+  //     switch (error.type) {
+  //         case BeautifyErrorType.InvalidExecutableVersion:
+  //             return (<div>Invalid version!</div>)
+  //         default:
+  //             return (<div>Unknown error!!!</div>)
+  //     }
+  // }
 }
 
 export interface DebugProps {
-    report: DebugReport;
+  report: DebugReport;
 }
 
-export interface DebugState {
-}
+export interface DebugState {}

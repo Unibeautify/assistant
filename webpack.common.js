@@ -2,15 +2,18 @@ const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const entry = require('webpack-glob-entry')
+const _ = require('lodash');
 
 const outputDir = "docs";
 module.exports = {
-    entry: [
-        "./src/index.tsx",
-    ],
+    entry: {
+       app: "./src/index.tsx",
+       samples: _.values(entry("./node_modules/ugly-samples/samples/**/*.txt")),
+    },
     output: {
         path: path.join(__dirname, outputDir),
-        filename: "bundle.js",
+        filename: "[name].bundle.js",
     },
 
     resolve: {
@@ -21,12 +24,17 @@ module.exports = {
     plugins: [
         new webpack.NamedModulesPlugin(),
         new HtmlWebpackPlugin({
-            title: 'Unibeautify Playground',
+            title: 'Unibeautify Assistant',
             chunksSortMode: 'dependency',
             template: path.resolve(__dirname, './src/index.ejs')
         }),
         new CleanWebpackPlugin([outputDir])
     ],
+
+    externals: [
+         "child_process",
+         "requireg",
+     ],    
 
     module: {
         rules: [
@@ -53,7 +61,12 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [ 'style-loader', 'css-loader' ],
-            }
+            },
+            {
+                test: /\.(txt)$/,
+                use: 'raw-loader',
+                include: path.resolve(__dirname, "node_modules"),
+              }
         ]
     }
 };
