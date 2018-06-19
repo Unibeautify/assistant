@@ -9,7 +9,7 @@ export class Setup extends React.Component<SetupProps, SetupState> {
     return (
       <div className="container-fluid">
         <div>
-          <h1 className="display-3 jumbotron text-center">Setup</h1>
+          <h1 className="display-3 jumbo text-center">Setup</h1>
           <ApiClientConsumer>
             {client => (
               <SupportConsumer client={client}>
