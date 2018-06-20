@@ -99,6 +99,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     const languageNames: string[] = languages.map(({ name }) => name);
     return {
       name: `${optionName} (${languages.length} languages)`,
+      sidemenuName: `${optionName}`,
       render: () => {
         return (
           <div>
@@ -282,17 +283,16 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
 
   public render() {
     const { step, steps, currentStep } = this;
-    console.log(this.props.support, step);
+    console.log(this.props.support, step);    
     return (
-      <div>
-        <Progress percentage={this.percentage} />
+      <div>        
         <div className="row">
           <SideMenu>
             {steps.map((step, index) => (
               <SideMenuItem
                 key={index}
                 index={index}
-                name={step.name}
+                name={step.sidemenuName || step.name}
                 selected={index === currentStep}
                 setStep={this.setStep}
               />
@@ -303,7 +303,8 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
             <div className="option-content">
               <StepView index={currentStep} step={step} />
             </div>
-            <div className="text-center">
+            <div className="footer">
+              <div className="step-buttons">
               {this.currentStep > 0 && (
                 <span>
                   <button className="btn btn-success" onClick={this.goToStart}>
@@ -324,9 +325,8 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
                   </button>
                 </span>
               )}
-              <div>
-                Step {this.currentStep + 1} of {this.totalSteps}
               </div>
+              <Progress percentage={this.percentage} />
             </div>
           </div>
         </div>
@@ -383,6 +383,7 @@ export interface WizardState {
 
 export interface Step {
   name: string;
+  sidemenuName?: string;
   render(options: LanguageOptionValues): JSX.Element;
 }
 
