@@ -303,7 +303,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
             <div className="option-content">
               <StepView index={currentStep} step={step} />
             </div>
-            <footer className="text-center">
+            <div className="text-center">
               {this.currentStep > 0 && (
                 <span>
                   <button className="btn btn-success" onClick={this.goToStart}>
@@ -327,7 +327,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
               <div>
                 Step {this.currentStep + 1} of {this.totalSteps}
               </div>
-            </footer>
+            </div>
           </div>
         </div>
       </div>
