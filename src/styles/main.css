@@ -138,3 +138,7 @@ label {
 .progress, .progress-bar {
   height: 36px;
 }
+
+.CodeMirror {
+  height: calc(100vh - 280px);
+}
