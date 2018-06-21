@@ -98,7 +98,9 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     const optionName: string = this.optionName(optionKey, option);
     const languageNames: string[] = languages.map(({ name }) => name);
     return {
-      name: `${optionName} (${languages.length} language${languages.length > 1 ? "s" : ""})`,
+      name: `${optionName} (${languages.length} language${
+        languages.length > 1 ? "s" : ""
+      })`,
       sidemenuName: `${optionName}`,
       render: () => {
         return (
@@ -283,9 +285,9 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
 
   public render() {
     const { step, steps, currentStep } = this;
-    console.log(this.props.support, step);    
+    console.log(this.props.support, step);
     return (
-      <div>        
+      <div>
         <div className="row">
           <SideMenu>
             {steps.map((step, index) => (
@@ -305,26 +307,29 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
             </div>
             <div className="footer">
               <div className="step-buttons">
-              {this.currentStep > 0 && (
-                <span>
-                  <button className="btn btn-success" onClick={this.goToStart}>
-                    &lt;&lt; Choose Languages
-                  </button>
-                  <button className="btn btn-primary" onClick={this.prev}>
-                    &lt; Previous
-                  </button>
-                </span>
-              )}
-              {this.state.currentStep + 1 < this.totalSteps && (
-                <span>
-                  <button className="btn btn-primary" onClick={this.next}>
-                    Next &gt;
-                  </button>
-                  <button className="btn btn-success" onClick={this.goToEnd}>
-                    Export Config &gt;&gt;
-                  </button>
-                </span>
-              )}
+                {this.currentStep > 0 && (
+                  <span>
+                    <button
+                      className="btn btn-success"
+                      onClick={this.goToStart}
+                    >
+                      &lt;&lt; Choose Languages
+                    </button>
+                    <button className="btn btn-primary" onClick={this.prev}>
+                      &lt; Previous
+                    </button>
+                  </span>
+                )}
+                {this.state.currentStep + 1 < this.totalSteps && (
+                  <span>
+                    <button className="btn btn-primary" onClick={this.next}>
+                      Next &gt;
+                    </button>
+                    <button className="btn btn-success" onClick={this.goToEnd}>
+                      Export Config &gt;&gt;
+                    </button>
+                  </span>
+                )}
               </div>
               <Progress percentage={this.percentage} />
             </div>

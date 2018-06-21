@@ -18,7 +18,7 @@ export class SelectOption extends React.Component<SelectOptionProps, {}> {
         <br />
         {languageNames.sort().map(languageName => (
           <div key={languageName} className="languageOptionGroup">
-          <h3>{languageName}</h3>
+            <h3>{languageName}</h3>
             <SelectLanguageOption
               optionKey={optionKey}
               option={option}
