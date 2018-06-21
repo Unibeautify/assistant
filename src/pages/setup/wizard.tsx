@@ -98,7 +98,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     const optionName: string = this.optionName(optionKey, option);
     const languageNames: string[] = languages.map(({ name }) => name);
     return {
-      name: `${optionName} (${languages.length} languages)`,
+      name: `${optionName} (${languages.length} language${languages.length > 1 ? "s" : ""})`,
       sidemenuName: `${optionName}`,
       render: () => {
         return (
