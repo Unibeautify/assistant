@@ -101,7 +101,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
       name: `${optionName} (${languages.length} language${
         languages.length > 1 ? "s" : ""
       })`,
-      sidemenuName: `${optionName}`,
+      sideMenuName: `${optionName}`,
       render: () => {
         return (
           <div>
@@ -294,7 +294,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
               <SideMenuItem
                 key={index}
                 index={index}
-                name={step.sidemenuName || step.name}
+                name={step.sideMenuName || step.name}
                 selected={index === currentStep}
                 setStep={this.setStep}
               />
@@ -388,7 +388,7 @@ export interface WizardState {
 
 export interface Step {
   name: string;
-  sidemenuName?: string;
+  sideMenuName?: string;
   render(options: LanguageOptionValues): JSX.Element;
 }
 
