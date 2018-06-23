@@ -98,7 +98,10 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     const optionName: string = this.optionName(optionKey, option);
     const languageNames: string[] = languages.map(({ name }) => name);
     return {
-      name: `${optionName} (${languages.length} languages)`,
+      name: `${optionName} (${languages.length} language${
+        languages.length > 1 ? "s" : ""
+      })`,
+      sideMenuName: `${optionName}`,
       render: () => {
         return (
           <div>
@@ -285,14 +288,13 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     console.log(this.props.support, step);
     return (
       <div>
-        <Progress percentage={this.percentage} />
         <div className="row">
           <SideMenu>
             {steps.map((step, index) => (
               <SideMenuItem
                 key={index}
                 index={index}
-                name={step.name}
+                name={step.sideMenuName || step.name}
                 selected={index === currentStep}
                 setStep={this.setStep}
               />
@@ -300,33 +302,36 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
           </SideMenu>
           <div className="col-sm-9">
             <h2>{step.name}</h2>
-            <div>
+            <div className="option-content">
               <StepView index={currentStep} step={step} />
             </div>
-            <div className="text-center">
-              {this.currentStep > 0 && (
-                <span>
-                  <button className="btn btn-success" onClick={this.goToStart}>
-                    &lt;&lt; Choose Languages
-                  </button>
-                  <button className="btn btn-primary" onClick={this.prev}>
-                    &lt; Previous
-                  </button>
-                </span>
-              )}
-              {this.state.currentStep + 1 < this.totalSteps && (
-                <span>
-                  <button className="btn btn-primary" onClick={this.next}>
-                    Next &gt;
-                  </button>
-                  <button className="btn btn-success" onClick={this.goToEnd}>
-                    Export Config &gt;&gt;
-                  </button>
-                </span>
-              )}
-              <div>
-                Step {this.currentStep + 1} of {this.totalSteps}
+            <div className="footer">
+              <div className="step-buttons">
+                {this.currentStep > 0 && (
+                  <span>
+                    <button
+                      className="btn btn-success"
+                      onClick={this.goToStart}
+                    >
+                      &lt;&lt; Choose Languages
+                    </button>
+                    <button className="btn btn-primary" onClick={this.prev}>
+                      &lt; Previous
+                    </button>
+                  </span>
+                )}
+                {this.state.currentStep + 1 < this.totalSteps && (
+                  <span>
+                    <button className="btn btn-primary" onClick={this.next}>
+                      Next &gt;
+                    </button>
+                    <button className="btn btn-success" onClick={this.goToEnd}>
+                      Export Config &gt;&gt;
+                    </button>
+                  </span>
+                )}
               </div>
+              <Progress percentage={this.percentage} />
             </div>
           </div>
         </div>
@@ -383,6 +388,7 @@ export interface WizardState {
 
 export interface Step {
   name: string;
+  sideMenuName?: string;
   render(options: LanguageOptionValues): JSX.Element;
 }
 

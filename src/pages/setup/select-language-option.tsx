@@ -71,7 +71,6 @@ export class SelectLanguageOption extends React.Component<
     const { code } = this;
     return (
       <div>
-        <h2>{this.props.languageName}</h2>
         <div>
           <strong>Value:</strong> {JSON.stringify(this.props.value)}
           {this.editButton()}
@@ -132,7 +131,6 @@ export class SelectLanguageOption extends React.Component<
     const { option, code } = this;
     return (
       <div>
-        <h2 className="inline">{this.props.languageName}</h2>
         {this.editButton()}
         <InputField
           option={option}
@@ -152,7 +150,6 @@ export class SelectLanguageOption extends React.Component<
     const { code, option } = this;
     return (
       <div>
-        <h2 className="inline">{this.props.languageName}</h2>
         {this.editButton()}
         <InputArray
           option={option}
