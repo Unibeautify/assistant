@@ -7,6 +7,9 @@ export class BeautifyConsumer extends React.Component<
   BeautifyProps,
   BeautifyState
 > {
+  constructor(props: BeautifyProps) {
+    super(props);
+  }
   state: BeautifyState = {
     sentDate: new Date(),
   };

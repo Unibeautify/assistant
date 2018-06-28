@@ -6,7 +6,9 @@ export class SupportConsumer extends React.Component<
   SupportProps,
   SupportState
 > {
-
+  constructor(props: SupportProps) {
+    super(props);
+  }
   state: SupportState = {};
 
   public componentWillMount() {

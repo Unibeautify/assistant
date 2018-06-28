@@ -3,7 +3,9 @@ import { DebugReportInput, DebugReportSummary } from "./components";
 import { DebugReport } from "./models";
 
 export class Debug extends React.Component<DebugProps, DebugState> {
-
+  constructor(props: DebugProps) {
+    super(props);
+  }
   state = {
     report: undefined,
   };

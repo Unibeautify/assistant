@@ -14,7 +14,9 @@ import { SupportResponse, LanguageWithOptions } from "../../ApiClient";
 import { Progress } from "../../Progress";
 
 export class Wizard extends React.Component<WizardProps, WizardState> {
-
+  constructor(props: WizardProps) {
+    super(props);
+  }
   state: WizardState = {
     languages: [],
     options: {},

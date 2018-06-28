@@ -13,6 +13,9 @@ export class ExportConfig extends React.Component<
   ExportConfigProps,
   ExportConfigState
 > {
+  constructor(props: ExportConfigProps) {
+    super(props);
+  }
   state = {
     exportLanguage: "json",
   };
