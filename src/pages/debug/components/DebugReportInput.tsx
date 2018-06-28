@@ -5,12 +5,9 @@ export class DebugReportInput extends React.Component<
   DebugReportInputProps,
   DebugReportInputState
 > {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      value: "",
-    };
-  }
+  state = {
+    value: "",
+  };
 
   render() {
     return (
