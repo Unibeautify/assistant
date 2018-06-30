@@ -8,8 +8,8 @@ export class SupportConsumer extends React.Component<
 > {
   constructor(props: SupportProps) {
     super(props);
-    this.state = {};
   }
+  state: SupportState = {};
 
   public componentWillMount() {
     this.props.client.support().then(support => {

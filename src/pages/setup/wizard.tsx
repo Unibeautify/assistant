@@ -16,12 +16,12 @@ import { Progress } from "../../Progress";
 export class Wizard extends React.Component<WizardProps, WizardState> {
   constructor(props: WizardProps) {
     super(props);
-    this.state = {
-      languages: [],
-      options: {},
-      currentStep: 0,
-    };
   }
+  state: WizardState = {
+    languages: [],
+    options: {},
+    currentStep: 0,
+  };
 
   private get steps(): Step[] {
     const steps = [this.chooseLanguageStep, ...this.optionSteps];

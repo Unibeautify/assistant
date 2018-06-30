@@ -9,10 +9,10 @@ export class BeautifyConsumer extends React.Component<
 > {
   constructor(props: BeautifyProps) {
     super(props);
-    this.state = {
-      sentDate: new Date(),
-    };
   }
+  state: BeautifyState = {
+    sentDate: new Date(),
+  };
 
   public componentDidMount() {
     this.beautify(this.props.data);
