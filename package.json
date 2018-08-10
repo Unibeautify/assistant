@@ -20,7 +20,7 @@
     "react-dom": "^16.4.1",
     "react-highlight": "^0.12.0",
     "ugly-samples": "git+https://github.com/Unibeautify/ugly-samples.git",
-    "unibeautify": "^0.15.0"
+    "unibeautify": "^0.16.0"
   },
   "devDependencies": {
     "@types/codemirror": "0.0.58",
