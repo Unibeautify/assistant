@@ -6,7 +6,7 @@
   "dependencies": {
     "@axetroy/react-download": "^1.1.1",
     "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
+    "babel-loader": "^8.0.0",
     "codemirror": "^5.39.0",
     "expose-loader": "^0.7.5",
     "highlight.js": "^9.12.0",
