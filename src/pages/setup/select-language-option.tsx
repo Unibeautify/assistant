@@ -13,7 +13,8 @@ export class SelectLanguageOption extends React.Component<
   SelectLanguageOptionProps,
   {}
 > {
-  private readonly languageEditURL: string = "https://github.com/unibeautify/ugly-samples/edit/master";
+  private readonly languageEditURL: string =
+    "https://github.com/unibeautify/ugly-samples/edit/master";
 
   public render() {
     const { option } = this;
