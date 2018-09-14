@@ -41,11 +41,12 @@ export class DiagnoseBeautifyError extends React.Component<
     return (
       <div>
         The version of executable "<strong>{error.executable}</strong>" could
-        not be properly parsed from "<strong>{error.version}</strong>". If you
-        think this is a bug please report it by clicking{" "}
+        not be properly parsed from "<strong>{error.version}</strong>
+        ". If you think this is a bug please report it by clicking{" "}
         <a href={url} target="_blank" className="alert-link">
           here
-        </a>.
+        </a>
+        .
       </div>
     );
   }

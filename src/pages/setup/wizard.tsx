@@ -280,7 +280,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     if (this.totalSteps === 1) {
       return 1;
     }
-    return Math.max(0, (this.currentStep + 1) / this.totalSteps * 100);
+    return Math.max(0, ((this.currentStep + 1) / this.totalSteps) * 100);
   }
 
   public render() {
