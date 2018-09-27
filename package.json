@@ -51,7 +51,7 @@
     "sass-loader": "7.1.0",
     "source-map-loader": "0.2.4",
     "style-loader": "0.23.0",
-    "typescript": "3.0.3",
+    "typescript": "3.1.1",
     "url-loader": "1.1.1",
     "webpack": "4.20.2",
     "webpack-cli": "3.1.1",
