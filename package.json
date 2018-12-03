@@ -28,7 +28,7 @@
     "@types/highlight.js": "9.12.3",
     "@types/js-yaml": "3.11.2",
     "@types/lodash": "4.14.118",
-    "@types/node": "10.12.11",
+    "@types/node": "10.12.12",
     "@types/react": "16.7.12",
     "@types/react-copy-to-clipboard": "4.2.6",
     "@types/react-dom": "16.0.11",
