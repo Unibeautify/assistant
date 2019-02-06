@@ -29,7 +29,7 @@
     "@types/js-yaml": "3.12.0",
     "@types/lodash": "4.14.120",
     "@types/node": "10.12.21",
-    "@types/react": "16.8.1",
+    "@types/react": "16.8.2",
     "@types/react-copy-to-clipboard": "4.2.6",
     "@types/react-dom": "16.0.11",
     "@types/react-router-dom": "4.3.1",
