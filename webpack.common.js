@@ -28,7 +28,7 @@ module.exports = {
             chunksSortMode: 'dependency',
             template: path.resolve(__dirname, './src/index.ejs')
         }),
-        new CleanWebpackPlugin([outputDir])
+        new CleanWebpackPlugin()
     ],
 
     externals: [
