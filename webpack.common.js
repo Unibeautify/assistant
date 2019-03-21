@@ -9,7 +9,7 @@ const outputDir = "docs";
 module.exports = {
     entry: {
        app: "./src/index.tsx",
-       samples: _.values(entry("./node_modules/ugly-samples/samples/**/*.txt")),
+       samples: _.values(entry("./node_modules/@unibeautify/ugly-samples/samples/**/*.txt")),
     },
     output: {
         path: path.join(__dirname, outputDir),
