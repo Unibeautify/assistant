@@ -6,7 +6,7 @@
   "dependencies": {
     "@axetroy/react-download": "^1.1.1",
     "@babel/core": "^7.0.0",
-    "@unibeautify/ugly-samples": "git+https://github.com/Unibeautify/ugly-samples.git",
+    "@unibeautify/ugly-samples": "^0.2.3",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.0",
     "codemirror": "^5.40.0",
