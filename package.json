@@ -37,7 +37,7 @@
     "@types/webpack-env": "1.13.9",
     "awesome-typescript-loader": "5.2.1",
     "bootstrap": "4.3.1",
-    "bootstrap-loader": "3.0.2",
+    "bootstrap-loader": "3.0.3",
     "clean-webpack-plugin": "2.0.1",
     "css-loader": "2.1.1",
     "exports-loader": "0.7.0",
