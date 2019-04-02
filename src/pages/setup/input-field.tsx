@@ -67,7 +67,7 @@ export class InputField extends OptionButton {
     const target = event.target;
     const valid = isNaN(Number(target.value)) ? false : target.checkValidity();
     if (valid) {
-      const newValue = target.value;
+      const newValue = Number(target.value);
       this.props.setValue && this.props.setValue(newValue);
     }
   };
