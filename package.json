@@ -33,7 +33,7 @@
     "@types/react-copy-to-clipboard": "4.2.6",
     "@types/react-dom": "16.8.4",
     "@types/react-router-dom": "4.3.3",
-    "@types/react-select": "2.0.18",
+    "@types/react-select": "2.0.19",
     "@types/webpack-env": "1.13.9",
     "awesome-typescript-loader": "5.2.1",
     "bootstrap": "4.3.1",
