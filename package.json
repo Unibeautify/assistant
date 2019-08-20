@@ -49,7 +49,7 @@
     "react-router-dom": "5.0.1",
     "react-timeago": "4.4.0",
     "resolve-url-loader": "3.1.0",
-    "sass-loader": "7.2.0",
+    "sass-loader": "7.3.1",
     "source-map-loader": "0.2.4",
     "style-loader": "1.0.0",
     "typescript": "3.5.3",
