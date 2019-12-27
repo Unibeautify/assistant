@@ -54,7 +54,7 @@
     "style-loader": "1.1.2",
     "typescript": "3.7.4",
     "url-loader": "2.3.0",
-    "webpack": "4.41.4",
+    "webpack": "4.41.5",
     "webpack-cli": "3.3.10",
     "webpack-dev-server": "3.10.1",
     "webpack-glob-entry": "2.1.1",
