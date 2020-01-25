@@ -26,7 +26,7 @@
   "devDependencies": {
     "@types/codemirror": "0.0.83",
     "@types/highlight.js": "9.12.3",
-    "@types/js-yaml": "3.12.1",
+    "@types/js-yaml": "3.12.2",
     "@types/lodash": "4.14.149",
     "@types/node": "10.12.24",
     "@types/react": "16.9.19",
