@@ -24,7 +24,7 @@
     "unibeautify": "^0.17.0"
   },
   "devDependencies": {
-    "@types/codemirror": "0.0.89",
+    "@types/codemirror": "0.0.90",
     "@types/highlight.js": "9.12.3",
     "@types/js-yaml": "3.12.3",
     "@types/lodash": "4.14.149",
