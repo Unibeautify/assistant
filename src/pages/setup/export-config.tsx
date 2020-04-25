@@ -37,19 +37,31 @@ export class ExportConfig extends React.Component<
     }
     return (
       <div className="exportConfig">
-        <Download
-          file={`.unibeautifyrc.${exportLanguage}`}
-          content={configText}
-        >
-          <button className="btn btn-info" type="submit">
-            Download
-          </button>
-        </Download>
-        <CopyToClipboard text={configText}>
-          <button className="btn btn-outline-info" type="submit">
-            Copy
-          </button>
-        </CopyToClipboard>
+        <div>
+          See{" "}
+          <a href="https://unibeautify.com/docs/config-file" target="_blank">
+            documentation on how to create a Unibeautify configuration file
+          </a>{" "}
+          for next steps.
+        </div>
+        <br />
+        <div>
+          <Download
+            file={`.unibeautifyrc.${exportLanguage}`}
+            content={configText}
+          >
+            <button className="btn btn-info" type="submit">
+              Download .unibeautifyrc.
+              {exportLanguage}
+            </button>
+          </Download>
+          <CopyToClipboard text={configText}>
+            <button className="btn btn-outline-info" type="submit">
+              Copy .unibeautifyrc.
+              {exportLanguage}
+            </button>
+          </CopyToClipboard>
+        </div>
         <ul className="nav nav-tabs">
           <li className="nav-item">
             <a
