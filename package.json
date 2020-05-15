@@ -27,7 +27,7 @@
     "@types/codemirror": "0.0.93",
     "@types/highlight.js": "9.12.4",
     "@types/js-yaml": "3.12.4",
-    "@types/lodash": "4.14.150",
+    "@types/lodash": "4.14.151",
     "@types/node": "10.12.24",
     "@types/react": "16.9.35",
     "@types/react-copy-to-clipboard": "4.3.0",
