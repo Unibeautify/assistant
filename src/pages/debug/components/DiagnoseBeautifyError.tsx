@@ -34,9 +34,7 @@ export class DiagnoseBeautifyError extends React.Component<
 
   private renderInvalidExecutableVersionError() {
     const error = this.error as InvalidExecutableVersionError;
-    const title = `Executable "${error.executable}" cannot parse version "${
-      error.version
-    }"`;
+    const title = `Executable "${error.executable}" cannot parse version "${error.version}"`;
     const url = `https://github.com/Glavin001/atom-beautify/issues/new?title=${title}`;
     return (
       <div>

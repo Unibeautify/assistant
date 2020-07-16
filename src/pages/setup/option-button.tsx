@@ -37,9 +37,7 @@ export class OptionButton extends React.Component<OptionButtonProps, {}> {
           ) : (
             <Highlight className={this.props.language}>{code}</Highlight>
           )
-        ) : (
-          undefined
-        )}
+        ) : undefined}
       </Card>
     );
   }
