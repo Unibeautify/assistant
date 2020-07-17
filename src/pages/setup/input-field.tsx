@@ -56,9 +56,7 @@ export class InputField extends OptionButton {
           ) : (
             <Highlight className={this.props.language}>{code}</Highlight>
           )
-        ) : (
-          undefined
-        )}
+        ) : undefined}
       </div>
     );
   }

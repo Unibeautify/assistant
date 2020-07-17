@@ -66,12 +66,9 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
         }))
         .orderBy(["languages.length", "optionKey"], ["desc", "asc"])
         // .reverse()
-        .reduce(
-          (steps, item) => {
-            return [...steps, this.stepForOption(item)];
-          },
-          [] as Step[]
-        )
+        .reduce((steps, item) => {
+          return [...steps, this.stepForOption(item)];
+        }, [] as Step[])
         .value()
     );
   }
@@ -405,8 +402,5 @@ export interface StepViewProps {
 }
 
 function optionKeyToTitle(optionKey: string): string {
-  return optionKey
-    .split("_")
-    .map(_.capitalize)
-    .join(" ");
+  return optionKey.split("_").map(_.capitalize).join(" ");
 }

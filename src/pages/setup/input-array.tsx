@@ -64,9 +64,7 @@ export class InputArray extends React.Component<InputArrayProps, {}> {
           ) : (
             <Highlight className={this.props.language}>{code}</Highlight>
           )
-        ) : (
-          undefined
-        )}
+        ) : undefined}
       </div>
     );
   }

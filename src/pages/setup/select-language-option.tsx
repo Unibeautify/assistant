@@ -28,9 +28,7 @@ export class SelectLanguageOption extends React.Component<
   }
 
   private get editExampleButtonUrl(): string {
-    return `${this.languageEditURL}/samples/${this.props.languageName}/${
-      this.props.optionKey
-    }.txt`;
+    return `${this.languageEditURL}/samples/${this.props.languageName}/${this.props.optionKey}.txt`;
   }
 
   private get addExampleButtonUrl(): string {
