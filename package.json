@@ -34,7 +34,7 @@
     "@types/react-dom": "16.9.9",
     "@types/react-router-dom": "5.1.6",
     "@types/react-select": "3.0.26",
-    "@types/webpack-env": "1.15.3",
+    "@types/webpack-env": "1.16.0",
     "awesome-typescript-loader": "5.2.1",
     "bootstrap": "4.5.3",
     "bootstrap-loader": "3.0.4",
