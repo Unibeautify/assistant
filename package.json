@@ -47,7 +47,7 @@
     "raw-loader": "3.1.0",
     "react-hot-loader": "4.13.0",
     "react-router-dom": "5.2.0",
-    "react-timeago": "4.4.0",
+    "react-timeago": "5.3.0",
     "resolve-url-loader": "3.1.2",
     "sass-loader": "8.0.2",
     "source-map-loader": "0.2.4",
